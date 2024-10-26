@@ -1,0 +1,16 @@
+.item-list {
+    color: #04acb4;
+    text-decoration: none;
+    
+}
+.item-list:hover {
+    background-color: #04acb4;
+    color: #000;
+    transition: 0.8s;
+}
+
+a {
+    color: #04acb4;
+    text-decoration: none;
+}
+

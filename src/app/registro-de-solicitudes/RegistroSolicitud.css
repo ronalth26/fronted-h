@@ -1,0 +1,74 @@
+.profile-section {
+  padding: 50px 0;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: none;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #00b3b3; /* Usar el color del logo */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease; /* Añadir transición suave */
+}
+
+.btn-primary {
+  background-color: #00b3b3; /* Usar el color del logo */
+}
+
+.btn-primary:hover {
+  background-color: #808080; /* Cambiar a gris cuando se pone el cursor encima */
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #808080; /* Cambiar a gris cuando se pone el cursor encima */
+}
+

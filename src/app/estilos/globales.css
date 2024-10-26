@@ -1,0 +1,21 @@
+.background-primary {
+    background-color: #01d28e;
+}
+.color-primary {
+    color :#01d28e;
+}
+
+.layout-pages{
+    margin-top:10rem;
+}
+
+.marginLeft-rating {
+   margin-left: -50px;
+}
+
+@media (width <= 550px) {
+    .marginLeft-rating {
+        margin-left: 0px;
+    }
+  }
+  

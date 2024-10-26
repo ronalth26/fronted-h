@@ -1,0 +1,95 @@
+/* .toggleButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 25px;
+} */
+
+.navbar {
+  padding: 5px 5%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  z-index: 1000;
+  background-color: #04acb4;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* .navbar .logo {
+  display: flex;
+  align-items: center;
+} */
+
+.navbar .logo img {
+  height: 10px;
+  width: 5%;
+  margin-right: 10px;
+}
+
+.clientButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+
+.clientText {
+  margin-right: 18rem;
+}
+
+@media (width <= 550px) {
+  .clientText {
+    margin-right: 80px;
+  }
+  .clientButton{
+    font-size: 14px;
+  }
+}
+
+
+
+.downArrow {
+  margin-left: 8px; 
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  background-color: #04acb4; /* Color del logo */
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.footerButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.content {
+  margin-top: 100px; /* Ajustar el margen superior para no quedar debajo de la barra superior */
+  margin-bottom: 60px; /* Ajustar el margen inferior para no quedar debajo de la barra inferior */
+  padding: 10px;
+}

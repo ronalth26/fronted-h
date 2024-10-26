@@ -1,0 +1,102 @@
+.profile-section {
+    background-color: #f7f7f7;
+    padding: 50px 0;
+  }
+  
+  .wrap {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    color: #333;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  
+  .detalle-solicitud {
+    margin-top: 20px;
+  }
+  
+  .estado-solicitud {
+    background: #fff3cd;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ffeeba;
+    position: relative;
+  }
+  
+  .estado-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .estado-badge {
+    background: #ffc107;
+    color: #212529;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .estado-button {
+    display: block;
+    background: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .detalle-precio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .precio {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+  }
+  
+  .metodo-pago {
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .detalle-info {
+    margin-bottom: 20px;
+  }
+  
+  .detalle-info h6 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+  }
+  
+  .detalle-info p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .btn-primary {
+    background-color: #0288d1;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  

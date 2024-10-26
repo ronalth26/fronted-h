@@ -1,0 +1,48 @@
+{
+  "name": "workitout",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-brands-svg-icons": "^5.9.0",
+    "@fortawesome/free-regular-svg-icons": "^5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@mui/icons-material": "^5.15.16",
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "cdbreact": "^1.5.19",
+    "classnames": "^2.2.6",
+    "leaflet": "^1.9.4",
+    "next": "14.2.3",
+    "next-auth": "^4.24.7",
+    "next-pwa": "^5.6.0",
+    "react": "^18",
+    "react-bootstrap": "^2.10.2",
+    "react-bootstrap-sidebar-menu": "^2.0.3",
+    "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
+    "react-icons": "^5.2.1",
+    "react-jwt": "^1.2.1",
+    "react-leaflet": "^4.2.1",
+    "react-scripts": "3.0.1",
+    "react-select": "^5.8.0",
+    "react-toastify": "^10.0.5",
+    "web-push": "^3.6.7",
+    "webpack": "^5.91.0",
+    "workitout": "file:"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.8",
+    "@types/react": "^18.3.1",
+    "typescript": "^5.4.5"
+  }
+}

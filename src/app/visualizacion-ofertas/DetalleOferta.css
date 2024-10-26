@@ -1,0 +1,26 @@
+.detalle-info {
+    margin-bottom: 20px;
+  }
+  
+  .detalle-info h6 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+  }
+  
+  .detalle-info p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .btn-primary {
+    background-color: #0288d1;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  

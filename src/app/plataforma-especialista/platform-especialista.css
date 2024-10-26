@@ -1,0 +1,42 @@
+.content {
+    padding: 20px;
+  }
+  
+  .color-primary {
+    color: #01d28e;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .form-control {
+    margin-bottom: 10px;
+  }
+  
+  .card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    color: #666;
+  }
+  
