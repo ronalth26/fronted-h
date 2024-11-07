@@ -4,6 +4,7 @@ import Sidebar from '../components/sidebar';
 import './DetalleSolicitud.css';
 
 const DetalleSolicitud = () => {
+  
   const [solicitud] = useState({
     categoria: 'Lavanderia',
     estado: 'Buscando a un prestador de servicios',

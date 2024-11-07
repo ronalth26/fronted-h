@@ -239,7 +239,7 @@ const RegistroSolicitud = () => {
               <div className="wrap">
                 <div className="profile-wrap p-4 p-md-5">
                   <center>
-                    <h3 className="form-title"><b>Registro de Solicitud</b></h3>
+                    <h3 className="form-title"><b>Registro de Solicitudd</b></h3>
                   </center>
                   <form onSubmit={handleSubmit}>
                     <div className="form-group mt-3">

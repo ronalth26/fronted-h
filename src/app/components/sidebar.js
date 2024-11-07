@@ -23,6 +23,7 @@ import '../estilos/globales.css';
 import { DOMAIN_FRONT, DOMAIN_BACK } from '../../../env';
 import useToken from '../utils/auth';
 import { useJwt } from "react-jwt";
+import { FaPaw } from 'react-icons/fa';
 
 const Sidebar = () => {
   const { Token } = useToken();
@@ -119,12 +120,12 @@ const Sidebar = () => {
           </ListItem>
         </Link>
         <Link href="/registro-de-solicitudes">
-          <ListItem className="item-list">
-            <ListItemIcon>
-              <FaInfoCircle />
-            </ListItemIcon>
-            <ListItemText primary="Registro de Solicitudes" />
-          </ListItem>
+        <ListItem className="item-list" style={{ backgroundColor: '#f9f6f2', borderRadius: '8px', marginBottom: '8px', padding: '10px' }}>
+      <ListItemIcon>
+        <FaPaw style={{ color: '#d97706', fontSize: '24px' }} /> {/* Ícono de huella de perrito en color personalizado */}
+      </ListItemIcon>
+      <ListItemText primary="Slinky" style={{ color: '#333', fontWeight: 'bold', fontSize: '18px' }} />
+    </ListItem>
         </Link>
         <Link href="/registro-quejas">
           <ListItem className="item-list">
