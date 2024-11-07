@@ -42,12 +42,12 @@ const Sidebar = () => {
       // window.location.href = `${DOMAIN_FRONT}`;
     }
   }, [Token, isExpired]);
-  
+
 
   useEffect(() => {
     // console.log('Token expiration status:', isExpired);
   }, [isExpired]);
-  
+
 
   const [id_usuario, setIdUsuario] = useState(0);
   const [especialista, setEspecialista] = useState(0);
@@ -62,7 +62,7 @@ const Sidebar = () => {
       setApellido(decodedToken.data.apellido);
     }
   }, [decodedToken]);
-  
+
 
   const [promedios, setPromedios] = useState([]);
 
@@ -120,12 +120,12 @@ const Sidebar = () => {
           </ListItem>
         </Link>
         <Link href="/registro-de-solicitudes">
-        <ListItem className="item-list" style={{ backgroundColor: '#f9f6f2', borderRadius: '8px', marginBottom: '8px', padding: '10px' }}>
-      <ListItemIcon>
-        <FaPaw style={{ color: '#d97706', fontSize: '24px' }} /> {/* Ícono de huella de perrito en color personalizado */}
-      </ListItemIcon>
-      <ListItemText primary="Slinky" style={{ color: '#333', fontWeight: 'bold', fontSize: '18px' }} />
-    </ListItem>
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <FaInfoCircle />
+            </ListItemIcon>
+            <ListItemText primary="Registro de Solicitudes" />
+          </ListItem>
         </Link>
         <Link href="/registro-quejas">
           <ListItem className="item-list">
@@ -170,6 +170,16 @@ const Sidebar = () => {
             <ListItemText primary="Cerrar Sesión" />
           </ListItem>
         </Link>
+
+        <Link href="/slinky">
+          <ListItem className="item-list" style={{ backgroundColor: '#f9f6f2', borderRadius: '8px', marginBottom: '8px', padding: '10px' }}>
+            <ListItemIcon>
+              <FaPaw style={{ color: '#d97706', fontSize: '24px' }} /> {/* Ícono de huella de perrito en color personalizado */}
+            </ListItemIcon>
+            <ListItemText primary="Slinky el perro" />
+          </ListItem>
+        </Link>
+
       </List>
     </Box>
   );
