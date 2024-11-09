@@ -216,11 +216,7 @@ const Sidebar = () => {
         {listP()}
       </Drawer>
       <nav className={styles.navbar} style={{ marginBottom: '4em' }}>
-        <div className="logo">
-          <a href={`${DOMAIN_FRONT}plataforma`}>
-            <img src="/logo_work.png" alt="logo" className={styles.logo} width={'30%'} />
-          </a>
-        </div>
+       
         <Button className={styles.clientButton}>
           <span style={{ fontSize: '15px', backgroundColor: '#fff', color: '#000', borderRadius: '20px', padding: '10px 20px' }} onClick={toggleDrawerP(true)} className={styles.clientText}>
             Cliente <FaChevronDown className={styles.downArrow} />
