@@ -225,11 +225,7 @@ export default function Inicio() {
                           title="Llamar al servicio 1">
                           General
                         </button>
-                        <button
-                          className="btn regional-button" onClick={() => confirmAction('1')}
-                          data-bs-toggle="tooltip" title="Llamar al servicio 2">
-                          Distrital
-                        </button>
+                       
                         <button
                           className="btn distrital-button" onClick={() => confirmAction('1')}
                           data-bs-toggle="tooltip" title="Llamar al servicio 3">
@@ -275,11 +271,7 @@ export default function Inicio() {
                           data-bs-toggle="tooltip" title="Llamar al servicio 2">
                           Distrital
                         </button>
-                        <button
-                          className="btn distrital-button" onClick={() => confirmAction('1')}
-                          data-bs-toggle="tooltip" title="Llamar al servicio 3">
-                          Provicial
-                        </button>
+                       
                       </div>
                     </td>
 
@@ -307,12 +299,65 @@ export default function Inicio() {
           </div>
 
 
+<<<<<<< HEAD
           < div class="col-3">3</div>
+=======
+          < div class="col-3">
+
+          <img src='/icons/1.png' style={{width:'200px'}}></img>
+          </div>
+        </div>
+
+        {/* Nav de Prueba */}
+
+        <div className="container mt-5">
+          <Tab.Container id="left-tabs-example" activeKey={key} onSelect={(k) => setKey(k)}>
+            <Row>
+              <Col sm={12}>
+                {/* Cambié "flex-column" por "d-flex" para alinear los botones horizontalmente */}
+                <Nav variant="pills" className="d-flex justify-content-start gap-3">
+                  <Nav.Item>
+                    <Nav.Link eventKey="home">
+                      <FaHome /> Home
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="profile">
+                      <FaUser /> Profile
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="contact">
+                      <FaEnvelope /> Contact
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              <Col sm={12}>
+                <Tab.Content>
+                  <Tab.Pane eventKey="home">
+                    <h3>Home</h3>
+                    <p>This is the Home section.</p>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="profile">
+                    <h3>Profile</h3>
+                    <p>This is the Profile section.</p>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="contact">
+                    <h3>Contact</h3>
+                    <p>This is the Contact section.</p>
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+>>>>>>> c5523abc7fa5ee4c062c8f23ba78781e998a1d48
         </div>
 
 
 
 
+<<<<<<< HEAD
         <div className="container my-4">
           {/* Top Navigation */}
           <div className="d-flex justify-content-between align-items-center mb-4">
@@ -504,6 +549,13 @@ export default function Inicio() {
 
 
         {filteredServices.map(service => (
+=======
+
+
+
+
+        {/* {filteredServices.map(service => (
+>>>>>>> c5523abc7fa5ee4c062c8f23ba78781e998a1d48
           <div key={service.idCategoria} className="col-md-4 mb-3">
             <a href={'/registro-de-solicitudes/' + service.idCategoria}>
               <div className="card">
@@ -514,7 +566,11 @@ export default function Inicio() {
               </div>
             </a>
           </div>
+<<<<<<< HEAD
         ))}
+=======
+        ))} */}
+>>>>>>> c5523abc7fa5ee4c062c8f23ba78781e998a1d48
 
       </div>
     </>
