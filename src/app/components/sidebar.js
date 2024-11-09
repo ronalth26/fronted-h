@@ -234,8 +234,8 @@ const Sidebar = () => {
             <img src="/icons/noti.png" alt="Alerta" style={{ width: '20px', height: '20px', color: 'white' }} />
           </Button>
           {/* Botón de notificaciones */}
-          <Button className="btn btn-info mx-2" style={{ display: 'flex', alignItems: 'center', background: 'rgba(209,235,222)' }}>
-            <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '20px' }} />
+          <Button className="btn btn-info mx-2" style={{ display: 'flex', alignItems: 'center', background: 'rgb(164,203,180)',border:'0px' }}>
+            <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '21px' }} />
           </Button>
           {/* Botón del usuario con icono y nombre */}
           {/* <div className="d-flex align-items-center">
