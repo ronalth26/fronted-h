@@ -17,7 +17,6 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import PersonIcon from '@mui/icons-material/Person';
 import Person4Icon from '@mui/icons-material/Person4';
-
 import './listaSidebar.css'
 import '../estilos/globales.css'
 import { DOMAIN_FRONT, DOMAIN_BACK } from '../../../env';
@@ -231,25 +230,37 @@ const Sidebar = () => {
       <Drawer anchor={'top'} open={isOpenP} onClose={toggleDrawerP(false)}>
         {listP()}
       </Drawer>
-      <nav className={styles.navbar} style={{ marginBottom: '4em' }}>
-        <ul style={{ listStyle: 'none', marginTop: '15px', marginLeft: '-247px', marginRight: "500px" }}>
 
-          <li style={{ listStyle: 'none' }}>
-            <Button style={{ fontSize: '25px', color: 'white' }} onClick={toggleDrawer(true)} className={styles.toggleButton}>
+      <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`} style={{ marginBottom: '4em', padding: '0 1em' }}>
+        <ul className="navbar-nav me-auto" style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+          <li className="nav-item">
+            <Button
+              style={{ fontSize: '25px', color: 'white', marginLeft: '-20px' }}
+              onClick={toggleDrawer(true)}
+              className={`${styles.toggleButton} btn btn-link`}
+            >
               {isOpen ? <FaTimes /> : <FaBars />}
             </Button>
           </li>
-
         </ul>
-        <Button className={styles.clientButton}>
-          <span style={{ fontSize: '15px', backgroundColor: '#fff', color: '#000', borderRadius: '20px', padding: '10px 20px' }} onClick={toggleDrawerP(true)} className={styles.clientText}>Especialista <FaChevronDown className={styles.downArrow} /></span>
-        </Button>
-        <div className="logo">
-          <a href={`${DOMAIN_FRONT}plataforma`}>
 
-          </a>
+        <div className="navbar-nav ms-auto" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          {/* Botón de alerta */}
+          <Button className="btn btn-warning mx-2" style={{ display: 'flex', alignItems: 'center', width: 'auto' }}>
+            <img src="/icons/noti.png" alt="Alerta" style={{ width: '20px', height: '20px', color: 'white' }} />
+          </Button>
+          {/* Botón de notificaciones */}
+          <Button className="btn btn-info mx-2" style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '20px' }} />
+          </Button>
+          {/* Botón del usuario con icono y nombre */}
+          {/* <div className="d-flex align-items-center">
+            <img src="/path/to/user-icon.png" alt="Usuario" className="rounded-circle" style={{ width: '30px', marginRight: '8px' }} />
+            <span style={{ color: 'white', fontSize: '1em' }}>Usuario</span>
+          </div> */}
         </div>
       </nav>
+
       <footer className={styles.footer}>
         <a>LA SEGURIDAD CIUDADANA ES TAREA DE TODOS NO DE UNA SOLA PERSONA</a>
       </footer>
