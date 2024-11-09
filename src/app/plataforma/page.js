@@ -31,7 +31,7 @@ export default function Inicio() {
 
   useEffect(() => {
     // Fetch categories from the backend
-    fetch(DOMAIN_BACK+'?controller=categorias&action=traer_categorias')
+    fetch(DOMAIN_BACK + '?controller=categorias&action=traer_categorias')
       .then(response => response.json())
       .then(data => {
         setServices(data);
@@ -74,6 +74,16 @@ export default function Inicio() {
     setIsSidebarOpen(open);
   };
 
+  const confirmAction = (serviceId) => {
+    const isConfirmed = window.confirm(`¿Estás seguro de llamar al servicio ${serviceId}?`);
+    if (isConfirmed) {
+      // Aquí puedes ejecutar la acción que desees al confirmar
+      alert(`Servicio ${serviceId} llamado.`);
+    } else {
+      alert(`No se ha llamado al servicio ${serviceId}.`);
+    }
+  };
+
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
@@ -93,29 +103,220 @@ export default function Inicio() {
     <>
       <Sidebar isOpen={isSidebarOpen} toggleDrawer={toggleDrawer} />
 
+
+
       <div className="content layout-pages" style={{ marginBottom: '4rem' }}>
-        <h3 className='color-primary text-center'><b>Rex no Alerta :vVvvvv</b></h3>
-        <div className="row justify-content-center mb-4">
-          <div className="col-md-6">
-            <input
-              type="text"
-              placeholder="¿Qué servicio estás buscando?"
-              value={searchTerm}
-              onChange={handleSearch}
-              className="form-control"
-            />
+
+        <div class="row">
+          <div class="col-3">1</div>
+
+          <div class="col-6 text-center">
+
+            <div class="row justify-content-center">
+              <table class="table table-bordered text-center align-middle w-75">
+                <tbody>
+                  <tr>
+                    {/* <!-- Columna de servicio con ícono y nombre --> */}
+                    <td class="d-flex align-items-center justify-content-center p-3">
+                      <img src="/icons/bombero.png" width="28" class="me-2" alt="Bomberos"></img>
+                      <span className="fw-bold" style={{ color: 'rgb(1, 37, 61)' }}>Bomberos</span>
+
+                    </td>
+
+                    {/* <!-- Columna de botones de llamada con colores y espaciado mejorado --> */}
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button
+                          className="btn general-button"
+                          onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip"
+                          title="Llamar al servicio 1">
+                          General
+                        </button>
+                        <button
+                          className="btn regional-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 2">
+                          Distrital
+                        </button>
+                        <button
+                          className="btn distrital-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 3">
+                          Provicial
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* <!-- Columna de botón de editar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                      </button>
+                    </td>
+
+                    {/* <!-- Columna de botón de localizar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    {/* <!-- Columna de servicio con ícono y nombre --> */}
+                    <td class="d-flex align-items-center justify-content-center p-3">
+                      <img src="/icons/policia.png" width="28" class="me-2" alt="Bomberos"></img>
+                      <span className="fw-bold" style={{ color: 'rgb(1, 37, 61)' }}>Comisaria</span>
+
+                    </td>
+
+                    {/* <!-- Columna de botones de llamada con colores y espaciado mejorado --> */}
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button
+                          className="btn general-button"
+                          onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip"
+                          title="Llamar al servicio 1">
+                          General
+                        </button>
+                        <button
+                          className="btn regional-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 2">
+                          Distrital
+                        </button>
+                        <button
+                          className="btn distrital-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 3">
+                          Provicial
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* <!-- Columna de botón de editar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                      </button>
+                    </td>
+
+                    {/* <!-- Columna de botón de localizar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    {/* <!-- Columna de servicio con ícono y nombre --> */}
+                    <td class="d-flex align-items-center justify-content-center p-3">
+                      <img src="/icons/ambulancia.png" width="28" class="me-2" alt="Bomberos"></img>
+                      <span className="fw-bold" style={{ color: 'rgb(1, 37, 61)' }}>Ambulancia</span>
+
+                    </td>
+
+                    {/* <!-- Columna de botones de llamada con colores y espaciado mejorado --> */}
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button
+                          className="btn general-button"
+                          onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip"
+                          title="Llamar al servicio 1">
+                          General
+                        </button>
+                        <button
+                          className="btn regional-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 2">
+                          Distrital
+                        </button>
+                        <button
+                          className="btn distrital-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 3">
+                          Provicial
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* <!-- Columna de botón de editar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                      </button>
+                    </td>
+
+                    {/* <!-- Columna de botón de localizar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    {/* <!-- Columna de servicio con ícono y nombre --> */}
+                    <td class="d-flex align-items-center justify-content-center p-3">
+                      <img src="/icons/bombero.png" width="28" class="me-2" alt="Bomberos"></img>
+                      <span className="fw-bold" style={{ color: 'rgb(1, 37, 61)' }}>Familiares</span>
+
+                    </td>
+
+                    {/* <!-- Columna de botones de llamada con colores y espaciado mejorado --> */}
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button
+                          className="btn general-button"
+                          onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip"
+                          title="Llamar al servicio 1">
+                          General
+                        </button>
+                        <button
+                          className="btn regional-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 2">
+                          Distrital
+                        </button>
+                        <button
+                          className="btn distrital-button" onClick={() => confirmAction('1')}
+                          data-bs-toggle="tooltip" title="Llamar al servicio 3">
+                          Provicial
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* <!-- Columna de botón de editar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                      </button>
+                    </td>
+
+                    {/* <!-- Columna de botón de localizar con ícono --> */}
+                    <td>
+                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
+                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
+                      </button>
+                    </td>
+                  </tr>
+            
+                </tbody>
+              </table>
+            </div>
+
+
+
           </div>
+
+
+          <div class="col-3">3</div>
         </div>
-        {showInstallAlert && (
-          <div className="alert alert-info text-center" role="alert">
-            <p>Instala nuestra aplicación para una mejor experiencia.</p>
-            <button className="btn btn-primary" onClick={handleInstallClick}>Instalar</button>
-          </div>
-        )}
-        <div className="row">
+
+
+
+
+
+   
           {filteredServices.map(service => (
             <div key={service.idCategoria} className="col-md-4 mb-3">
-              <a href={'/registro-de-solicitudes/'+service.idCategoria}>
+              <a href={'/registro-de-solicitudes/' + service.idCategoria}>
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">{service.nombreCategoria}</h5>
@@ -125,7 +326,7 @@ export default function Inicio() {
               </a>
             </div>
           ))}
-        </div>
+      
       </div>
     </>
   );

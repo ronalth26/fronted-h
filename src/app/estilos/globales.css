@@ -19,3 +19,116 @@
     }
   }
   
+
+/* para el inicio */
+
+.regional-button {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background: radial-gradient(circle, #FFDD44, #FFAA00);
+    border: 2px solid #FF8800;
+    color: black;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .regional-button::after {
+    content: "169";
+    position: absolute;
+    top: -25px; /* Ajusta la distancia */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #FF4444;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .regional-button:hover::after {
+    opacity: 1;
+  }
+  
+  .regional-button:hover {
+    transform: scale(1.05); 
+  }
+  
+
+  /* 2 */
+  .general-button {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background: radial-gradient(circle, #FFDD44, #FFAA00);
+    border: 2px solid #FF8800;
+    color: black;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .general-button::after {
+    content: "112";
+    position: absolute;
+    top: -25px; /* Ajusta la distancia */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #0069cb;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .general-button:hover::after {
+    opacity: 1;
+  }
+  
+  .general-button:hover {
+    transform: scale(1.05); 
+  }
+
+  /* 3 */
+  .distrital-button {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background: radial-gradient(circle, #FFDD44, #FFAA00);
+    border: 2px solid #FF8800;
+    color: black;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .distrital-button::after {
+    content: "106";
+    position: absolute;
+    top: -25px; /* Ajusta la distancia */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #00950a;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .distrital-button:hover::after {
+    opacity: 1;
+  }
+  
+  .distrital-button:hover {
+    transform: scale(1.05); 
+  }
