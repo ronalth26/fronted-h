@@ -296,7 +296,7 @@ export default function Inicio() {
                       </button>
                     </td>
                   </tr>
-
+            
                 </tbody>
               </table>
             </div>
@@ -306,40 +306,27 @@ export default function Inicio() {
           </div>
 
 
-              <     div class="col-3">3</div>
+          < div class="col-3">3</div>
         </div>
 
 
 
-        <nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-    <a class="nav-item nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-    <a class="nav-item nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
-  </div>
-</nav>
-
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Contenido de Home</div>
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Contenido de Profile</div>
-  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Contenido de Contact</div>
-</div>
 
 
-
-        {filteredServices.map(service => (
-          <div key={service.idCategoria} className="col-md-4 mb-3">
-            <a href={'/registro-de-solicitudes/' + service.idCategoria}>
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{service.nombreCategoria}</h5>
-                  <p className="card-text">{service.count} encuentra especialistas</p>
+   
+          {filteredServices.map(service => (
+            <div key={service.idCategoria} className="col-md-4 mb-3">
+              <a href={'/registro-de-solicitudes/' + service.idCategoria}>
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">{service.nombreCategoria}</h5>
+                    <p className="card-text">{service.count} encuentra especialistas</p>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </div>
-        ))}
-
+              </a>
+            </div>
+          ))}
+      
       </div>giy
     </>
   );
