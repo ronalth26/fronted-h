@@ -132,3 +132,101 @@
   .distrital-button:hover {
     transform: scale(1.05); 
   }
+
+/* Estilos generales */
+.navbar {
+  background-color: #4a90e2; /* Fondo azul para la barra de navegación */
+}
+
+.nav-link {
+  color: white; /* Texto blanco para los enlaces */
+}
+
+.nav-link.active {
+  background-color: #1a73e8; /* Fondo azul oscuro para el enlace activo */
+  color: #fff; /* Aseguramos que el texto sea blanco */
+}
+
+.card {
+  border: 1px solid #ddd; /* Borde gris claro para las tarjetas */
+  margin-top: 1rem; /* Espacio entre las tarjetas */
+}
+
+.star-rating i {
+  color: #ffc107; /* Color amarillo para las estrellas */
+}
+
+.category-tab {
+  border-bottom: 2px solid #ddd; /* Borde inferior gris claro para las pestañas de categoría */
+}
+
+.category-tab a {
+  color: #333; /* Texto gris oscuro para las pestañas de categoría */
+  padding: 10px 20px; /* Espaciado para las pestañas */
+  display: inline-block; /* Para que se alineen correctamente */
+}
+
+.category-tab a.active {
+  border-bottom: 3px solid #4a90e2; /* Subrayado azul para la pestaña activa */
+  color: #4a90e2; /* Color azul para la pestaña activa */
+  font-weight: bold; /* Texto en negrita para la pestaña activa */
+}
+
+/* Estilos personalizados */
+.container {
+  background-color: #f0f2f5; /* Fondo gris claro para el contenedor */
+  padding: 20px;
+  border-radius: 8px; /* Bordes ligeramente redondeados */
+}
+
+.form-control {
+  background-color: #f8f9fa; /* Fondo gris claro para los inputs */
+  border-color: #ced4da; /* Borde claro para mejor contraste */
+}
+
+.btn-custom {
+  background-color: #007bff; /* Fondo azul personalizado para los botones */
+  color: white; /* Texto blanco para los botones */
+  border: none; /* Sin borde */
+}
+
+.btn-custom:hover {
+  background-color: #0056b3; /* Fondo azul más oscuro al pasar el ratón */
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.nav-pills .nav-link {
+  color: #007bff; /* Color personalizado para los enlaces de navegación */
+}
+
+.nav-pills .nav-link.active {
+  background-color: #007bff; /* Fondo azul para el enlace activo de navegación */
+  color: white; /* Texto blanco para el enlace activo */
+}
+
+.tab-content {
+  background-color: white; /* Fondo blanco para el contenido de las pestañas */
+  padding: 20px;
+  border-radius: 8px; /* Bordes redondeados para las pestañas */
+}
+
+/* Estilos adicionales para los inputs */
+.input-custom {
+  background-color: #f8f9fa; /* Fondo gris claro para el input */
+  border-color: #ced4da; /* Borde claro para el input */
+}
+
+.input-custom:focus {
+  border-color: #007bff; /* Borde azul cuando el input está enfocado */
+}
+
+
