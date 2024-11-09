@@ -94,7 +94,7 @@ export default function Inicio() {
       <Sidebar isOpen={isSidebarOpen} toggleDrawer={toggleDrawer} />
 
       <div className="content layout-pages" style={{ marginBottom: '4rem' }}>
-        <h3 className='color-primary text-center'><b>Rex no Alerta</b></h3>
+        <h3 className='color-primary text-center'><b>Rex no Alerta :v</b></h3>
         <div className="row justify-content-center mb-4">
           <div className="col-md-6">
             <input
