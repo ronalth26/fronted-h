@@ -217,7 +217,7 @@ const Sidebar = () => {
       </Drawer>
       <nav className={styles.navbar} style={{ marginBottom: '4em' }}>
 
-        <ul style={{ listStyle: 'none', marginTop: '15px',marginLeft:'-200px',marginRight:"400px" }}>
+        <ul style={{ listStyle: 'none', marginTop: '15px',marginLeft:'-247px',marginRight:"500px" }}>
 
           <li style={{ listStyle: 'none' }}>
             <Button style={{ fontSize: '25px',  color: 'white' }} onClick={toggleDrawer(true)} className={styles.toggleButton}>
