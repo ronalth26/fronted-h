@@ -7,7 +7,8 @@ import '../boostrap.css';
 import Sidebar from '../components/sidebar';
 import '../estilos/globales.css';
 import useToken from '../utils/auth';
-
+import { Nav, Tab, Row, Col } from 'react-bootstrap';
+import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
 export default function Inicio() {
 
 
@@ -21,7 +22,7 @@ export default function Inicio() {
   //     window.location.href = `${DOMAIN_FRONT}/login`;
   //   }
   // }, [isExpired, decodedToken]);
-
+  const [key, setKey] = useState('home');
   const [searchTerm, setSearchTerm] = useState('');
   const [services, setServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState(services);
@@ -254,7 +255,7 @@ export default function Inicio() {
                   <tr>
                     {/* <!-- Columna de servicio con ícono y nombre --> */}
                     <td class="d-flex align-items-center justify-content-center p-3">
-                      <img src="/icons/bombero.png" width="28" class="me-2" alt="Bomberos"></img>
+                      <img src="/icons/fa.png" width="28" class="me-2" alt="Bomberos"></img>
                       <span className="fw-bold" style={{ color: 'rgb(1, 37, 61)' }}>Familiares</span>
 
                     </td>
@@ -296,7 +297,7 @@ export default function Inicio() {
                       </button>
                     </td>
                   </tr>
-            
+
                 </tbody>
               </table>
             </div>
@@ -306,27 +307,215 @@ export default function Inicio() {
           </div>
 
 
-          <div class="col-3">3</div>
+          < div class="col-3">3</div>
         </div>
 
 
 
 
-
-   
-          {filteredServices.map(service => (
-            <div key={service.idCategoria} className="col-md-4 mb-3">
-              <a href={'/registro-de-solicitudes/' + service.idCategoria}>
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">{service.nombreCategoria}</h5>
-                    <p className="card-text">{service.count} encuentra especialistas</p>
-                  </div>
-                </div>
-              </a>
+        <div className="container my-4">
+          {/* Top Navigation */}
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="d-flex align-items-center">
+              <label className="me-2">Distrito:</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Selecciona distrito"
+                style={{
+                  maxWidth: "200px",
+                  backgroundColor: "#f8f9fa", // Light gray background for the input
+                  borderColor: "#ced4da" // Light border color for contrast
+                }}
+                list="distritos" // Links input to the datalist below
+              />
+              <datalist id="distritos">
+                <option value="Arequipa" />
+                <option value="Cayma" />
+                <option value="Cerro Colorado" />
+                <option value="Mariano Melgar" />
+                <option value="Miraflores" />
+                <option value="Paucarpata" />
+                <option value="Sachaca" />
+                <option value="Socabaya" />
+                <option value="Yanahuara" />
+                {/* Add more districts as needed */}
+              </datalist>
+              <button className="btn btn-primary ms-2">
+                <i className="fas fa-map-marker-alt"></i>+
+              </button>
             </div>
-          ))}
-      
+            <div>
+              <button className="btn btn-outline-primary">
+                <i className="fas fa-plus"></i> Mis publicaciones
+              </button>
+            </div>
+          </div>
+
+          {/* Navigation Tabs */}
+          <div className="container mt-5">
+            <Tab.Container id="left-tabs-example" activeKey={key} onSelect={(k) => setKey(k)}>
+              <Row>
+                <Col sm={12}>
+                  {/* Horizontal buttons */}
+                  <Nav variant="pills" className="d-flex justify-content-start gap-3">
+                    <Nav.Item>
+                      <Nav.Link eventKey="noticias" className="btn-custom">
+                        <i className="fas fa-newspaper"></i> Noticias
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="afiches" className="btn-custom">
+                        <i className="fas fa-image"></i> Afiches
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="consejo" className="btn-custom">
+                        <i className="fas fa-lightbulb"></i> Consejos
+                      </Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Col>
+
+                <Col sm={12}>
+                  <Tab.Content>
+                    {/* Noticias Tab */}
+                    <Tab.Pane eventKey="noticias">
+                      <div className="content-section card p-3 mb-3">
+                        <h3 className="mb-2 text-center">Título de la Noticia</h3>
+
+                        {/* Fecha y Distrito */}
+                        <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+
+                        {/* Descripción */}
+                        <p className="text-center mb-3">Breve descripción de la noticia que da una idea general del contenido.</p>
+
+                        {/* Estrellas y botón debajo de la imagen */}
+                        <div className="d-flex flex-column align-items-center">
+                          {/* Imagen */}
+                          <img src="https://via.placeholder.com/150" alt="Imagen de Noticia" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+
+                          {/* Estrellas y botón de compartir al lado */}
+                          <div className="d-flex align-items-center">
+                            {/* Estrellas */}
+                            <div className="star-rating d-flex align-items-center me-3">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                              ))}
+                            </div>
+
+                            {/* Botón de Compartir */}
+                            <div className="d-flex flex-column align-items-center">
+                              <button className="btn btn-outline-primary d-flex align-items-center">
+                                <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                              </button>
+                              <small>Compartir</small>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </Tab.Pane>
+
+                    {/* Afiches Tab */}
+                    <Tab.Pane eventKey="afiches">
+                      <div className="content-section card p-3 mb-3">
+                        <h3 className="mb-2 text-center">Título de la Afiche</h3>
+
+                        {/* Fecha y Distrito */}
+                        <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+
+                        {/* Descripción */}
+                        <p className="text-center mb-3">Breve descripción del afiche que da una idea general del contenido.</p>
+
+                        {/* Estrellas y botón debajo de la imagen */}
+                        <div className="d-flex flex-column align-items-center">
+                          {/* Imagen */}
+                          <img src="https://via.placeholder.com/150" alt="Imagen de Afiche" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+
+                          {/* Estrellas y botón de compartir al lado */}
+                          <div className="d-flex align-items-center">
+                            {/* Estrellas */}
+                            <div className="star-rating d-flex align-items-center me-3">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                              ))}
+                            </div>
+
+                            {/* Botón de Compartir */}
+                            <div className="d-flex flex-column align-items-center">
+                              <button className="btn btn-outline-primary d-flex align-items-center">
+                                <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                              </button>
+                              <small>Compartir</small>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </Tab.Pane>
+
+                    {/* Consejos Tab */}
+                    <Tab.Pane eventKey="consejo">
+                      <div className="content-section card p-3 mb-3">
+                        <h3 className="mb-2 text-center">Título de la Consejo</h3>
+
+                        {/* Fecha y Distrito */}
+                        <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+
+                        {/* Descripción */}
+                        <p className="text-center mb-3">Breve descripción del consejo que da una idea general del contenido.</p>
+
+                        {/* Estrellas y botón debajo de la imagen */}
+                        <div className="d-flex flex-column align-items-center">
+                          {/* Imagen */}
+                          <img src="https://via.placeholder.com/150" alt="Imagen del Consejo" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+
+                          {/* Estrellas y botón de compartir al lado */}
+                          <div className="d-flex align-items-center">
+                            {/* Estrellas */}
+                            <div className="star-rating d-flex align-items-center me-3">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                              ))}
+                            </div>
+
+                            {/* Botón de Compartir */}
+                            <div className="d-flex flex-column align-items-center">
+                              <button className="btn btn-outline-primary d-flex align-items-center">
+                                <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                              </button>
+                              <small>Compartir</small>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
+          </div>
+        </div>
+
+
+        {filteredServices.map(service => (
+          <div key={service.idCategoria} className="col-md-4 mb-3">
+            <a href={'/registro-de-solicitudes/' + service.idCategoria}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{service.nombreCategoria}</h5>
+                  <p className="card-text">{service.count} encuentra especialistas</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+
       </div>
     </>
   );
