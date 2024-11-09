@@ -53,6 +53,7 @@ const Sidebar = () => {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
 
+  
   useEffect(() => {
     if (decodedToken) {
       setIdUsuario(decodedToken.data.id);

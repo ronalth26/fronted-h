@@ -1,5 +1,5 @@
 'use client';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FaBars, FaTimes, FaHome, FaInfoCircle, FaBriefcase, FaQuestionCircle, FaEnvelope, FaChevronDown } from 'react-icons/fa';
 import Box from '@mui/material/Box';
@@ -20,14 +20,14 @@ import Person4Icon from '@mui/icons-material/Person4';
 
 import './listaSidebar.css'
 import '../estilos/globales.css'
-import { DOMAIN_FRONT,DOMAIN_BACK } from '../../../env';
+import { DOMAIN_FRONT, DOMAIN_BACK } from '../../../env';
 import useToken from '../utils/auth';
 import { useJwt } from "react-jwt";
 
 
 const Sidebar = () => {
 
-  
+
 
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
@@ -39,8 +39,8 @@ const Sidebar = () => {
   //     window.location.href = `${DOMAIN_FRONT}`;
   //   }
   // }, [isExpired, decodedToken]);
-  
-  
+
+
   const [id_usuario, setIdUsuario] = useState(0);
   const [especialista, setEspecialista] = useState(0);
   const [nombre, setNombre] = useState('');
@@ -60,31 +60,31 @@ const Sidebar = () => {
   // OBTENER PROMEDIO DE CALIFICACIONES
 
 
-     const [promedios, setPromedios] = useState([])
- 
-     useEffect(() => {
-      if(id_usuario != 0){
+  const [promedios, setPromedios] = useState([])
+
+  useEffect(() => {
+    if (id_usuario != 0) {
       // Fetch categories from the backend
-      fetch(DOMAIN_BACK+'?controller=valoraciones&action=traer_calificaciones&idEspecialista='+id_usuario)
+      fetch(DOMAIN_BACK + '?controller=valoraciones&action=traer_calificaciones&idEspecialista=' + id_usuario)
         .then(response => response.json())
         .then(data => {
           setPromedios(data)
-            // Filtrar datos con puntuacionCliente definida
-                const puntuaciones = data.map(item => item.puntuacionEspecialista).filter(puntuacion => puntuacion !== undefined && puntuacion !== null);
-              
-                // Calcular el promedio
-                const total = puntuaciones.reduce((acc, curr) => acc + curr, 0);
-                const promedio = total / puntuaciones.length;
-              
-                setPromedios(promedio)
+          // Filtrar datos con puntuacionCliente definida
+          const puntuaciones = data.map(item => item.puntuacionEspecialista).filter(puntuacion => puntuacion !== undefined && puntuacion !== null);
+
+          // Calcular el promedio
+          const total = puntuaciones.reduce((acc, curr) => acc + curr, 0);
+          const promedio = total / puntuaciones.length;
+
+          setPromedios(promedio)
         })
         .catch(error => console.error('Error al traer solicitud:', error));
-      }
-    }, [id_usuario]);
+    }
+  }, [id_usuario]);
 
 
 
-    console.log(promedios);
+  console.log(promedios);
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -115,84 +115,82 @@ const Sidebar = () => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-    <div class="row align-items-center text-center mt-3">
-       <div class="col-md-5">
-         <img src="/profile.png" alt="logo" class="img-fluid" style={{maxWidth:'50%',height:'auto'}}  />
-         <p>{nombre} {apellido}</p>
-       </div>
-       <div class="col-md-7 marginLeft-rating">
-         <Stack spacing={1} justifyContent="center" alignItems="center">
-           <Rating name="size-medium" readOnly precision={0.5} defaultValue={promedios} />
-  
-         </Stack>
-       </div>
-     </div>
-
+      <div class="row align-items-center text-center mt-3">
+        <div class="col-md-5">
+          <img src="/profile.png" alt="logo" class="img-fluid" style={{ maxWidth: '50%', height: 'auto' }} />
+          <p>{nombre} {apellido}</p>
+        </div>
+        <div class="col-md-7 marginLeft-rating">
+          <Stack spacing={1} justifyContent="center" alignItems="center">
+            <Rating name="size-medium" readOnly precision={0.5} defaultValue={promedios} />
+          </Stack>
+        </div>
+      </div>
       <List>
-       <Link href="/plataforma-especialista">
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <FaHome />
-           </ListItemIcon>
-           <ListItemText primary="Lista de Ofertas" />
-         </ListItem>
-       </Link>
-       {especialista == '0' && (
-          <Link href="/registro-de-especialista">
+        <Link href="/plataforma-especialista">
           <ListItem className="item-list">
             <ListItemIcon>
               <FaHome />
             </ListItemIcon>
-            <ListItemText primary="Registro de Especialista" />
+            <ListItemText primary="Lista de Ofertas" />
           </ListItem>
-         </Link>
-       )}
-       <Link href="/registro-quejas">
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <FaBriefcase />
-           </ListItemIcon>
-           <ListItemText primary="Registro Quejas" />
-         </ListItem>
-       </Link>
-       {especialista == '1' && (
-       <Link href="visualizacion-solicitudes-especialista">
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <FaQuestionCircle />
-           </ListItemIcon>
-           <ListItemText primary="Historial" />
-         </ListItem>
-       </Link>
+        </Link>
+        {especialista == '0' && (
+          <Link href="/registro-de-especialista">
+            <ListItem className="item-list">
+              <ListItemIcon>
+                <FaHome />
+              </ListItemIcon>
+              <ListItemText primary="Registro de Especialista" />
+            </ListItem>
+          </Link>
         )}
-       <Link href="#">
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <FaEnvelope />
-           </ListItemIcon>
-           <ListItemText primary="Contacto" />
-         </ListItem>
-       </Link>
-     </List>
+        <Link href="/registro-quejas">
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <FaBriefcase />
+            </ListItemIcon>
+            <ListItemText primary="Registro Quejas" />
+          </ListItem>
+        </Link>
+        {especialista == '1' && (
+          <Link href="visualizacion-solicitudes-especialista">
+            <ListItem className="item-list">
+              <ListItemIcon>
+                <FaQuestionCircle />
+              </ListItemIcon>
+              <ListItemText primary="Historial" />
+            </ListItem>
+          </Link>
+        )}
+        <Link href="#">
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <FaEnvelope />
+            </ListItemIcon>
+            <ListItemText primary="Contacto" />
+          </ListItem>
+        </Link>
+      </List>
       <Divider />
       <List>
-       <Link href="/perfil">
-         <ListItem className="item-list">
-           <ListItemIcon>
-           <InboxIcon />
-           </ListItemIcon>
-           <ListItemText primary="Perfil" />
-         </ListItem>
-       </Link>
-       <Link href={DOMAIN_FRONT}>
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <BuildIcon />
-           </ListItemIcon>
-           <ListItemText primary="Cerrar Sesión" />
-         </ListItem>
-       </Link>
-     </List>
+        <Link href="/perfil">
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Perfil" />
+          </ListItem>
+        </Link>
+        <Link href={DOMAIN_FRONT}>
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <BuildIcon />
+            </ListItemIcon>
+            <ListItemText primary="Cerrar Sesión" />
+          </ListItem>
+        </Link>
+      </List>
     </Box>
   );
 
@@ -204,23 +202,23 @@ const Sidebar = () => {
       onKeyDown={toggleDrawerP(false)}
     >
       <List>
-       <Link href="/plataforma-especialista">
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <PersonIcon />
-           </ListItemIcon>
-           <ListItemText primary="Especialista" />
-         </ListItem>
-       </Link>
-       <Link href="/plataforma">
-         <ListItem className="item-list">
-           <ListItemIcon>
-             <Person4Icon />
-           </ListItemIcon>
-           <ListItemText primary="Cliente" />
-         </ListItem>
-       </Link>
-     </List>
+        <Link href="/plataforma-especialista">
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="Especialista" />
+          </ListItem>
+        </Link>
+        <Link href="/plataforma">
+          <ListItem className="item-list">
+            <ListItemIcon>
+              <Person4Icon />
+            </ListItemIcon>
+            <ListItemText primary="Cliente" />
+          </ListItem>
+        </Link>
+      </List>
     </Box>
   );
 
@@ -233,27 +231,27 @@ const Sidebar = () => {
       <Drawer anchor={'top'} open={isOpenP} onClose={toggleDrawerP(false)}>
         {listP()}
       </Drawer>
-      <nav className={styles.navbar} style={{marginBottom:'4em'}}>
-        <div className="logo">
-          <a href={DOMAIN_FRONT+'plataforma-especialista'}>
-           <img src="/logo_work.png" alt="logo" className={styles.logo}  width={'30%'}/>
-          </a>
-        </div>
-        <Button className={styles.clientButton}>
-          <span style={{fontSize:'15px',backgroundColor:'#fff',color:'#000',borderRadius:'20px',padding:'10px 20px'}}  onClick={toggleDrawerP(true)} className={styles.clientText}>Especialista <FaChevronDown className={styles.downArrow} /></span>
-          
-        </Button>
-        <ul style={{listStyle:'none',marginTop:'15px'}}>
-          <li style={{listStyle:'none'}}>
-            <Button style={{fontSize:'25px',backgroundColor:'#fff',color:'#000'}} onClick={toggleDrawer(true)} className={styles.toggleButton}>
+      <nav className={styles.navbar} style={{ marginBottom: '4em' }}>
+        <ul style={{ listStyle: 'none', marginTop: '15px', marginLeft: '-247px', marginRight: "500px" }}>
+
+          <li style={{ listStyle: 'none' }}>
+            <Button style={{ fontSize: '25px', color: 'white' }} onClick={toggleDrawer(true)} className={styles.toggleButton}>
               {isOpen ? <FaTimes /> : <FaBars />}
             </Button>
           </li>
+
         </ul>
+        <Button className={styles.clientButton}>
+          <span style={{ fontSize: '15px', backgroundColor: '#fff', color: '#000', borderRadius: '20px', padding: '10px 20px' }} onClick={toggleDrawerP(true)} className={styles.clientText}>Especialista <FaChevronDown className={styles.downArrow} /></span>
+        </Button>
+        <div className="logo">
+          <a href={`${DOMAIN_FRONT}plataforma`}>
+
+          </a>
+        </div>
       </nav>
       <footer className={styles.footer}>
-        <a href='/plataforma-especialista'><button  className={styles.footerButton}>Ofertas</button></a>
-        <a href='../visualizacion-solicitudes-especialista'><button  className={styles.footerButton}>Mis solicitudes</button></a>
+        <a>LA SEGURIDAD CIUDADANA ES TAREA DE TODOS NO DE UNA SOLA PERSONA</a>
       </footer>
     </div>
   );
