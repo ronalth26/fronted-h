@@ -216,23 +216,28 @@ const Sidebar = () => {
         {listP()}
       </Drawer>
       <nav className={styles.navbar} style={{ marginBottom: '4em' }}>
-        <div className="logo">
-          <a href={`${DOMAIN_FRONT}plataforma`}>
-          
-          </a>
-        </div>
-        <Button className={styles.clientButton}>
-          <span style={{ fontSize: '15px', backgroundColor: '#fff', color: '#000', borderRadius: '20px', padding: '10px 20px' }} onClick={toggleDrawerP(true)} className={styles.clientText}>
-            Cliente <FaChevronDown className={styles.downArrow} />
-          </span>
-        </Button>
-        <ul style={{ listStyle: 'none', marginTop: '15px' }}>
+
+        <ul style={{ listStyle: 'none', marginTop: '15px',marginLeft:'-200px',marginRight:"400px" }}>
+
           <li style={{ listStyle: 'none' }}>
             <Button style={{ fontSize: '25px', backgroundColor: '#fff', color: '#000' }} onClick={toggleDrawer(true)} className={styles.toggleButton}>
               {isOpen ? <FaTimes /> : <FaBars />}
             </Button>
           </li>
+
         </ul>
+        
+        <Button className={styles.clientButton}>
+          <span style={{ fontSize: '15px', backgroundColor: '#fff', color: '#000', borderRadius: '20px', padding: '10px 20px' }} onClick={toggleDrawerP(true)} className={styles.clientText}>
+            Cliente <FaChevronDown className={styles.downArrow} />
+          </span>
+        </Button>
+        <div className="logo">
+          <a href={`${DOMAIN_FRONT}plataforma`}>
+
+          </a>
+        </div>
+
       </nav>
       <footer className={styles.footer}>
         <a href='/plataforma'><button className={styles.footerButton}>Servicios</button></a>
