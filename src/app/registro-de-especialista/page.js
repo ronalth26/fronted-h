@@ -2,6 +2,7 @@
 import React, { useState,useEffect} from 'react';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './registroEspecialista.module.css';
