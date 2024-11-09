@@ -220,7 +220,7 @@ const Sidebar = () => {
         <ul style={{ listStyle: 'none', marginTop: '15px',marginLeft:'-200px',marginRight:"400px" }}>
 
           <li style={{ listStyle: 'none' }}>
-            <Button style={{ fontSize: '25px', backgroundColor: '#fff', color: '#000' }} onClick={toggleDrawer(true)} className={styles.toggleButton}>
+            <Button style={{ fontSize: '25px',  color: 'white' }} onClick={toggleDrawer(true)} className={styles.toggleButton}>
               {isOpen ? <FaTimes /> : <FaBars />}
             </Button>
           </li>
