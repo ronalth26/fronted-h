@@ -1,127 +1,173 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
-import { DOMAIN_BACK, DOMAIN_FRONT } from '../../../env';
-import Sidebar from '../components/sidebar';
-import SidebarEspecialista from '../components/sidebarEspecialista';
-import './profile.css';
-import useToken from '../utils/auth';
+import { useEffect, useState } from 'react';
+import { Col, Nav, Row, Tab } from 'react-bootstrap';
+import { FaEnvelope, FaHome, FaUser } from 'react-icons/fa';
 import { useJwt } from "react-jwt";
-
-export default function ProfilePage() {
+import { DOMAIN_BACK } from '../../../env';
+import '../boostrap.css';
+import Sidebar from '../components/sidebar';
+import '../estilos/globales.css';
+import useToken from '../utils/auth';
+ 
+export default function Inicio() {
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
-
-  const [idUsuario, setIdUsuario] = useState(0);
-  const [especialista, setEspecialista] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
+ 
+  const [key, setKey] = useState('home'); // Inicialización de la variable key
+  const [searchTerm, setSearchTerm] = useState('');
+  const [services, setServices] = useState([]);
+  const [filteredServices, setFilteredServices] = useState(services);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallAlert, setShowInstallAlert] = useState(false);
+ 
   useEffect(() => {
-    if (decodedToken) {
-      setIdUsuario(decodedToken.data.id);
-      setEspecialista(decodedToken.data.especialista);
-      setIsLoading(false);
+    // Fetch categories from the backend
+    fetch(DOMAIN_BACK + '?controller=categorias&action=traer_categorias')
+      .then(response => response.json())
+      .then(data => {
+        setServices(data);
+        setFilteredServices(data);
+      })
+      .catch(error => console.error('Error fetching services:', error));
+ 
+    // Listen for the beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      console.log(e);
+      setShowInstallAlert(true);  // Show the install alert
+    });
+ 
+    // Listen for the appinstalled event
+    window.addEventListener('appinstalled', () => {
+      setDeferredPrompt(null);
+      setShowInstallAlert(false);  // Hide the install alert
+    });
+  }, []);
+ 
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = services.filter(service =>
+      service.nombreCategoria.toLowerCase().includes(term)
+    );
+    setFilteredServices(filtered);
+  };
+ 
+  const handleClick = (serviceName) => {
+    alert(`You clicked on ${serviceName}`);
+  };
+ 
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
     }
-  }, [decodedToken]);
-
-  const [usuario, setUsuario] = useState([]);
-
-  useEffect(() => {
-    if (idUsuario !== 0) {
-      fetch(`${DOMAIN_BACK}?controller=usuarios&action=traer_usuario&idUsuario=${idUsuario}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setUsuario(data);
-        })
-        .catch((error) => console.error('Error al traer datos del usuario:', error));
-    }
-  }, [idUsuario]);
-
-  const [editMode, setEditMode] = useState(false);
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(`${DOMAIN_BACK}?controller=usuarios&action=actualizar_cliente&idUsuario=${usuario.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          idUsuario: usuario.id,
-          nombre: usuario.nombre,
-          apellido: usuario.apellido,
-          email: usuario.email,
-          telefono: usuario.telefono,
-          contrasena: usuario.contrasena
-        })
-      });
-      const data = await response.json();
-      if (data.estado === 1) {
-        toast.success(data.mensaje);
-        setTimeout(() => {
-          window.location.href = DOMAIN_FRONT + 'perfil';
-        }, 2000);
-      } else {
-        toast.error(data.mensaje);
-      }
-    } catch (error) {
-      console.error('Error al actualizar perfil:', error);
-      toast.error('Error al actualizar perfil');
+    setIsSidebarOpen(open);
+  };
+ 
+  const confirmAction = (serviceId) => {
+    const isConfirmed = window.confirm(`¿Estás seguro de llamar al servicio ${serviceId}?`);
+    if (isConfirmed) {
+      // Aquí puedes ejecutar la acción que desees al confirmar
+      alert(`Servicio ${serviceId} llamado.`);
+    } else {
+      alert(`No se ha llamado al servicio ${serviceId}.`);
     }
   };
-
+ 
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        setDeferredPrompt(null);
+        setShowInstallAlert(false);
+      });
+    }
+  };
+ 
   return (
     <>
-      <ToastContainer />
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          {especialista === '0' ? (
-            <Sidebar />
-          ) : (
-            <SidebarEspecialista />
-          )}
-          <section className="profile-section" style={{ marginTop: '10rem', marginBottom: '4rem' }}>
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-md-6 text-center mb-5">
-                  <h3>Contacto</h3>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="col-md-7 col-lg-5">
-                  <div className="wrap">
-                    <img src="/logo_work.png" width="100%" alt="Logo"></img>
-                    <div className="profile-wrap p-4 p-md-5">
-                      <form>
-                        <h5>Correo Electrónico</h5>
-                        <p>soporte@workitout.com</p>
-                        <h5>Teléfono</h5>
-                        <p>+51 902 747 165</p>
-                        <h5>Horario de Atención</h5>
-                        <p>Lunes a Viernes, de 9:00am a 18:00 pm </p>
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://api.whatsapp.com/send?phone=51902747165&text=%C2%A1Hola!%20%C2%BFEn%20qu%C3%A9%20podemos%20ayudarte%3F"
-                        >
-                          <button type="button" className="btn btn-primary form-control">
-                            Envíanos un mensaje al WhatsApp
-                          </button>
-                        </a>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <Sidebar isOpen={isSidebarOpen} toggleDrawer={toggleDrawer} />
+ 
+      <div className="content layout-pages" style={{ marginBottom: '4rem' }}>
+ 
+        <div className="row">
+          <div className="col-3">1</div>
+ 
+          <div className="col-6 text-center">
+            <div className="row justify-content-center">
+              <table className="table table-bordered text-center align-middle w-75">
+                <tbody>
+                  {/* Resto de las filas de la tabla */}
+                </tbody>
+              </table>
             </div>
-          </section>
-        </>
-      )}
+          </div>
+ 
+          <div className="col-3">3</div>
+        </div>
+ 
+        <div className="container mt-5">
+          <Tab.Container id="left-tabs-example" activeKey={key} onSelect={(k) => setKey(k)}>
+            <Row>
+              <Col sm={3}>
+                <Nav variant="pills" className="flex-column">
+                  <Nav.Item>
+                    <Nav.Link eventKey="home">
+                      <FaHome /> Home
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="profile">
+                      <FaUser /> Profile
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="contact">
+                      <FaEnvelope /> Contact
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              <Col sm={9}>
+                <Tab.Content>
+                  <Tab.Pane eventKey="home">
+                    <h3>Home</h3>
+                    <p>This is the Home section.</p>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="profile">
+                    <h3>Profile</h3>
+                    <p>This is the Profile section.</p>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="contact">
+                    <h3>Contact</h3>
+                    <p>This is the Contact section.</p>
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+        </div>
+ 
+        {filteredServices.map(service => (
+          <div key={service.idCategoria} className="col-md-4 mb-3">
+            <a href={'/registro-de-solicitudes/' + service.idCategoria}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{service.nombreCategoria}</h5>
+                  <p className="card-text">{service.count} encuentra especialistas</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+ 
+      </div>
     </>
   );
 }

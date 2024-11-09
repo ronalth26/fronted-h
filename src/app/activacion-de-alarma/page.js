@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useJwt } from "react-jwt";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +13,7 @@ import Sidebar from '../components/sidebar';
 import SidebarEpecialista from '../components/sidebarEspecialista';
 import '../estilos/globales.css';
 import useToken from '../utils/auth';
-
+import './activacion-de-alarma-module.css';
 
 const RegisterComplaint = () => {
 
@@ -139,7 +139,7 @@ const RegisterComplaint = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6 text-center mb-5">
-              <h2 className="heading-section">Registro de Quejas</h2>
+              <h2 className="heading-section">Registro de Quejas de Mario</h2>
             </div>
           </div>
           <div className="row justify-content-center">
