@@ -1,29 +1,28 @@
 // Sidebar.js
 'use client';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { FaBars, FaTimes, FaHome, FaInfoCircle, FaBriefcase, FaQuestionCircle, FaEnvelope, FaChevronDown } from 'react-icons/fa';
+import BuildIcon from '@mui/icons-material/Build';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import PersonIcon from '@mui/icons-material/Person';
+import Person4Icon from '@mui/icons-material/Person4';
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import BuildIcon from '@mui/icons-material/Build';
-import styles from './sidebar.module.css';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import PersonIcon from '@mui/icons-material/Person';
-import Person4Icon from '@mui/icons-material/Person4';
-import './listaSidebar.css';
-import '../estilos/globales.css';
-import { DOMAIN_FRONT, DOMAIN_BACK } from '../../../env';
-import useToken from '../utils/auth';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { FaBars, FaBriefcase, FaChevronDown, FaEnvelope, FaHome, FaInfoCircle, FaPaw, FaQuestionCircle, FaTimes } from 'react-icons/fa';
 import { useJwt } from "react-jwt";
-import { FaPaw } from 'react-icons/fa';
+import { DOMAIN_BACK, DOMAIN_FRONT } from '../../../env';
+import '../estilos/globales.css';
+import useToken from '../utils/auth';
+import './listaSidebar.css';
+import styles from './sidebar.module.css';
 
 const Sidebar = () => {
   const { Token } = useToken();
@@ -231,8 +230,7 @@ const Sidebar = () => {
         </ul>
       </nav>
       <footer className={styles.footer}>
-        <a href='/plataforma'><button className={styles.footerButton}>Servicios</button></a>
-        <a href='/visualizacion-solicitudes'><button className={styles.footerButton}>Mis solicitudes</button></a>
+        <a>LA SEGURIDAD CIUDADANA ES TAREA DE TODOS NO DE UNA SOLA PERSONA</a>
       </footer>
     </div>
   );
