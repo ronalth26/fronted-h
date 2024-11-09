@@ -172,7 +172,7 @@ const Sidebar = () => {
         </Link>
 
         <Link href="/slinky">
-          <ListItem className="item-list" style={{ backgroundColor: '#f9f6f2', borderRadius: '8px', marginBottom: '8px', padding: '10px' }}>
+          <ListItem className="item-list" style={{ backgroundColor: '#f9f6f2', borderRadius: '8px' }}>
             <ListItemIcon>
               <FaPaw style={{ color: '#d97706', fontSize: '24px' }} /> {/* Ícono de huella de perrito en color personalizado */}
             </ListItemIcon>
