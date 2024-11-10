@@ -10,9 +10,14 @@ import useToken from '../utils/auth';
 import { Nav, Tab, Row, Col, Modal, Button } from 'react-bootstrap';
 import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
 
+
 export default function Inicio() {
   const [showChat, setShowChat] = useState(false);
   const [showForm_NewPost, setshowForm_NewPost] = useState(false);
+  const [showEdit, setEdit] = useState(false);
+  const [showMaps, setMaps] = useState(false);
+  const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
@@ -20,11 +25,14 @@ export default function Inicio() {
   // Función para abrir el modal del chat
   const handleChatOpen = () => setShowChat(true);
   const handleChatOpen_NewPost = () => setshowForm_NewPost(true);
+  const handleMaps = () => setMaps(true);
+  const handleEdit = () => setEdit(true);
 
   // Función para cerrar el modal del chat
   const handleChatClose = () => setShowChat(false);
   const handleChatClose_NewPost = () => setshowForm_NewPost(false);
-
+  const handleMapsClose = () => setMaps(false);
+  const handleEditClose = () => setEdit(false);
   // useEffect(() => {
   //   if (isExpired || !decodedToken) {
   //     window.location.href = `${DOMAIN_FRONT}/login`;
@@ -107,6 +115,68 @@ export default function Inicio() {
       });
     }
   };
+
+
+  const locations = [
+    {
+      id: 1,
+      name: "Comisaría Central",
+      type: "Comisaría",
+      position: { lat: -12.0464, lng: -77.0428 },
+      address: "Calle Lima 123",
+      phone: "+51 123 4567",
+    },
+    {
+      id: 2,
+      name: "Estación de Bomberos",
+      type: "Bomberos",
+      position: { lat: -12.0453, lng: -77.0308 },
+      address: "Avenida Bomberos 456",
+      phone: "+51 765 4321",
+    },
+    {
+      id: 3,
+      name: "Ambulancia de Emergencia",
+      type: "Ambulancia",
+      position: { lat: -12.0491, lng: -77.0348 },
+      address: "Plaza San Miguel",
+      phone: "+51 987 6543",
+    },
+  ];
+
+  useEffect(() => {
+    if (showMaps && !map) {
+      const initMap = new window.google.maps.Map(document.getElementById("map"), {
+        center: { lat: -12.0464, lng: -77.0428 },
+        zoom: 14,
+      });
+      setMap(initMap);
+    }
+  }, [showMaps, map]);
+
+  useEffect(() => {
+    if (map) {
+      markers.forEach((marker) => marker.setMap(null));
+      const newMarkers = locations.map((location) => {
+        const marker = new window.google.maps.Marker({
+          position: location.position,
+          map: map,
+          title: location.name,
+        });
+        const infoWindow = new window.google.maps.InfoWindow({
+          content: `<div>
+                      <h5>${location.name}</h5>
+                      <p>Tipo: ${location.type}</p>
+                      <p>Dirección: ${location.address}</p>
+                      <p>Teléfono: ${location.phone}</p>
+                    </div>`,
+        });
+        marker.addListener("click", () => infoWindow.open(map, marker));
+        return marker;
+      });
+      setMarkers(newMarkers);
+    }
+  }, [map]);
 
   return (
     <>
@@ -292,14 +362,14 @@ export default function Inicio() {
                     {/* <!-- Columna de botón de editar con ícono --> */}
                     <td>
                       <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                        <img src="/icons/edit.png" width="20" alt="Editar" onClick={handleEdit}></img>
                       </button>
                     </td>
 
                     {/* <!-- Columna de botón de localizar con ícono --> */}
                     <td>
                       <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
+                        <img src="/icons/loc.png" width="20" alt="Localizar" onClick={handleMaps}></img>
                       </button>
                     </td>
                   </tr>
@@ -569,7 +639,135 @@ export default function Inicio() {
         </Modal.Body>
       </Modal>
 
+      {/* Modal del formulario de editar */}
+      <Modal show={showEdit} onHide={handleEditClose} size="lg">
+        <Modal.Header closeButton>
+          <img
+            src="/icons/edit.png"
+            style={{ width: '40px', height: '40px', marginRight: '10px' }}
+          />
+          <Modal.Title style={{ paddingLeft: '190px' }}>
+            Editar Contactos de Emergencia
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="row">
+              {/* Columna 1 */}
+              <div className="col-md-6">
+                <div className="form-group d-flex align-items-center mb-3">
+                  <label htmlFor="contactName" className="flex-shrink-0 me-2" style={{ width: '120px', fontWeight: 'bold' }}>
+                    <i className="bi bi-person-circle"></i> Nombre:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="contactName"
+                    placeholder="Nombre del contacto"
+                    style={{ flex: 1 }}
+                  />
+                </div>
 
+                <div className="form-group d-flex align-items-center mb-3">
+                  <label htmlFor="contactPhone" className="flex-shrink-0 me-2" style={{ width: '120px', fontWeight: 'bold' }}>
+                    <i className="bi bi-telephone"></i> Teléfono:
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    id="contactPhone"
+                    placeholder="Teléfono"
+                    style={{ flex: 1 }}
+                  />
+                </div>
+
+                <div className="form-group d-flex align-items-center mb-3">
+                  <label htmlFor="contactEmail" className="flex-shrink-0 me-2" style={{ width: '120px', fontWeight: 'bold' }}>
+                    <i className="bi bi-envelope"></i> Correo:
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="contactEmail"
+                    placeholder="Correo electrónico"
+                    style={{ flex: 1 }}
+                  />
+                </div>
+              </div>
+
+              {/* Columna 2 */}
+              <div className="col-md-6">
+                <div className="form-group d-flex align-items-center mb-3">
+                  <label htmlFor="emergencyName" className="flex-shrink-0 me-2" style={{ width: '120px', fontWeight: 'bold' }}>
+                    <i className="bi bi-person-badge"></i> Emergencia:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="emergencyName"
+                    placeholder="Nombre del contacto de emergencia"
+                    style={{ flex: 1 }}
+                  />
+                </div>
+
+                <div className="form-group d-flex align-items-center mb-3">
+                  <label htmlFor="emergencyPhone" className="flex-shrink-0 me-2" style={{ width: '120px', fontWeight: 'bold' }}>
+                    <i className="bi bi-phone-vibrate"></i> Celular
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    id="emergencyPhone"
+                    placeholder="Teléfono de emergencia"
+                    style={{ flex: 1 }}
+                  />
+                </div>
+
+                <div className="form-group d-flex align-items-center mb-3">
+                  <label htmlFor="relation" className="flex-shrink-0 me-2" style={{ width: '120px', fontWeight: 'bold' }}>
+                    <i className="bi bi-people"></i> Relación:
+                  </label>
+                  <select className="form-control" id="relation" style={{ flex: 1 }}>
+                    <option value="familiar">Familiar</option>
+                    <option value="amigo">Amigo</option>
+                    <option value="trabajo">Trabajo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-primary w-100 mt-3"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                borderRadius: '4px',
+                border: 'none',
+                backgroundColor: '#007bff',
+              }}
+            >
+              Guardar Cambios
+            </button>
+          </form>
+        </Modal.Body>
+
+      </Modal>
+
+      {/* Modal del formulario de maps*/}
+      <Modal show={showMaps} onHide={handleMapsClose} size="lg">
+      <Modal.Header closeButton>
+        <img
+          src="/icons/maps.png"
+          style={{ width: "40px", height: "40px", marginRight: "10px" }}
+          alt="Map Icon"
+        />
+        <Modal.Title>Ubicación más cercana</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div id="map" style={{ height: "500px", width: "100%" }}></div>
+      </Modal.Body>
+    </Modal>
 
       <div className="container my-4">
         {/* Top Navigation */}
