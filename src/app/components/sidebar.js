@@ -353,7 +353,7 @@ const Sidebar = () => {
             <span style={{ color: 'white', fontSize: '1em' }}>Usuario</span>
           </div> */}
         </div>
-    
+
       <Popover
         open={openPopover}
         anchorEl={anchorEl}

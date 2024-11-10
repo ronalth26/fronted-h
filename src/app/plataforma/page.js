@@ -429,6 +429,7 @@ export default function Inicio() {
             Chatbot
           </Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <div
             className="chat-box"
@@ -465,6 +466,7 @@ export default function Inicio() {
                 Ofrecemos bomberos, policía, ambulancia, y más. ¿Te gustaría más información sobre algún servicio?
               </p>
             </div>
+            
           </div>
           {/* fin modal */}
 

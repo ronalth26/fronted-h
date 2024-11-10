@@ -261,6 +261,10 @@ const Sidebar = () => {
       <footer className={styles.footer}>
         <a>LA SEGURIDAD CIUDADANA ES TAREA DE TODOS NO DE UNA SOLA PERSONA</a>
       </footer>
+
+      
+
+
     </div>
   );
 };
