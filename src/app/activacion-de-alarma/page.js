@@ -73,16 +73,30 @@ const ActivacionAlarma = () => {
 
   const handleConfirmAlarm = () => {
     if (alarmReason.trim()) {
+      // Actualiza el estado de alarma de usuario seleccionado y añade el motivo
+      const updatedUsers = groupUsers.map((u) =>
+        u.name === selectedUser.name
+          ? { ...u, alarmActive: true }
+          : u
+      );
+      setGroupUsers(updatedUsers);
+  
+      // Guarda el motivo en el historial
       setAlarmReasons([
         ...alarmReasons,
         { user: selectedUser.name, reason: alarmReason },
       ]);
+  
+      // Restablece el motivo y cierra el cuadro de diálogo
       setAlarmReason("");
       setShowDialog(false);
     } else {
       alert("Por favor ingrese un motivo para activar la alarma");
     }
   };
+
+  const buttonColor = (alarmActive) =>
+    alarmActive ? "rgb(232, 92, 92, 1)" : "rgb(164,203,180)";
 
   return (
     <div
@@ -142,7 +156,7 @@ const ActivacionAlarma = () => {
             <Button
               className="btn btn-info"
               style={{
-                background: "rgb(164,203,180)",
+                background: buttonColor(user.alarmActive),
                 border: "0px",
                 display: "flex",
                 alignItems: "center",
