@@ -1,32 +1,50 @@
 // Sidebar.js
-'use client';
-import BuildIcon from '@mui/icons-material/Build';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import PersonIcon from '@mui/icons-material/Person';
-import Person4Icon from '@mui/icons-material/Person4';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { FaBars, FaBriefcase, FaChevronDown, FaEnvelope, FaHome, FaInfoCircle, FaPaw, FaQuestionCircle, FaTimes } from 'react-icons/fa';
+"use client";
+import BuildIcon from "@mui/icons-material/Build";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import PersonIcon from "@mui/icons-material/Person";
+import Person4Icon from "@mui/icons-material/Person4";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog"; // Asegúrate de importar el componente Dialog
+import DialogActions from "@mui/material/DialogActions"; // También importa DialogActions
+import DialogContent from "@mui/material/DialogContent"; // También importa DialogContent
+import DialogTitle from "@mui/material/DialogTitle"; // También importa DialogTitle
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Rating from "@mui/material/Rating";
+import Stack from "@mui/material/Stack";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import {
+  FaBars,
+  FaBriefcase,
+  FaEnvelope,
+  FaHome,
+  FaInfoCircle,
+  FaPaw,
+  FaQuestionCircle,
+  FaTimes,
+} from "react-icons/fa";
 import { useJwt } from "react-jwt";
-import { DOMAIN_BACK, DOMAIN_FRONT } from '../../../env';
-import '../estilos/globales.css';
-import useToken from '../utils/auth';
-import './listaSidebar.css';
-import styles from './sidebar.module.css';
+import { DOMAIN_BACK, DOMAIN_FRONT } from "../../../env";
+import "../estilos/globales.css";
+import useToken from "../utils/auth";
+import "./listaSidebar.css";
+import styles from "./sidebar.module.css";
 
 const Sidebar = () => {
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isAlarmActive, setIsAlarmActive] = useState(false);
+  const [motivoAlarma, setMotivoAlarma] = useState("");
+  const [alarmReason, setAlarmReason] = useState("");
 
   // useEffect(() => {
   //   if (Token == null) {
@@ -37,22 +55,19 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (Token == null || isExpired) {
-      console.log('Token has expired, redirecting to login page.');
+      console.log("Token has expired, redirecting to login page.");
       // window.location.href = `${DOMAIN_FRONT}`;
     }
   }, [Token, isExpired]);
-
 
   useEffect(() => {
     // console.log('Token expiration status:', isExpired);
   }, [isExpired]);
 
-
   const [id_usuario, setIdUsuario] = useState(0);
   const [especialista, setEspecialista] = useState(0);
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
 
   useEffect(() => {
     if (decodedToken) {
@@ -63,20 +78,25 @@ const Sidebar = () => {
     }
   }, [decodedToken]);
 
-
   const [promedios, setPromedios] = useState([]);
 
   useEffect(() => {
     if (id_usuario !== 0) {
-      fetch(`${DOMAIN_BACK}?controller=valoraciones&action=traer_calificaciones&idCliente=${id_usuario}`)
-        .then(response => response.json())
-        .then(data => {
-          const puntuaciones = data.map(item => item.puntuacionCliente).filter(puntuacion => puntuacion !== undefined && puntuacion !== null);
+      fetch(
+        `${DOMAIN_BACK}?controller=valoraciones&action=traer_calificaciones&idCliente=${id_usuario}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const puntuaciones = data
+            .map((item) => item.puntuacionCliente)
+            .filter(
+              (puntuacion) => puntuacion !== undefined && puntuacion !== null
+            );
           const total = puntuaciones.reduce((acc, curr) => acc + curr, 0);
           const promedio = total / puntuaciones.length;
           setPromedios(promedio);
         })
-        .catch(error => console.error('Error al traer solicitud:', error));
+        .catch((error) => console.error("Error al traer solicitud:", error));
     }
   }, [id_usuario]);
 
@@ -84,30 +104,91 @@ const Sidebar = () => {
   const [isOpenP, setIsOpenP] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setIsOpen(open);
   };
 
   const toggleDrawerP = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setIsOpenP(open);
   };
 
+  const handleAlertClick = () => {
+    setModalOpen(true);
+  };
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false); // Cerrar el modal
+    setAlarmReason("");
+  };
+
+  const handleAlarmReasonChange = (e) => {
+    setAlarmReason(e.target.value); // Actualizar el estado con el texto ingresado
+  };
+
+  const handleActivateAlert = () => {
+    // Lógica para activar la alarma
+    setModalOpen(false);
+    console.log("Alarma activada: ", motivoAlarma);
+  };
+
+  const handleConfirmAlarm = () => {
+    if (!alarmReason.trim()) {
+      alert("Por favor ingrese un motivo para activar la alarma.");
+      return;
+    }
+    setIsAlarmActive(true); // Cambiar el estado de la alarma a activa
+    handleCloseModal();
+    // Aquí puedes hacer cualquier lógica adicional para activar la alarma
+  };
+
+  const ModalBox = ({ children }) => (
+    <Box sx={{ backgroundColor: "white", padding: 2, borderRadius: 2 }}>
+      {children}
+    </Box>
+  );
+
   const list = () => (
-    <Box sx={{ width: 300 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-     
+    <Box
+      sx={{ width: 300 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
       <div className="row align-items-center text-center mt-3">
         <div className="col-md-5">
-          <img src="/profile.png" alt="logo" className="img-fluid" style={{ maxWidth: '50%', height: 'auto' }} />
-          <p>{nombre} {apellido}</p>
+          <img
+            src="/profile.png"
+            alt="logo"
+            className="img-fluid"
+            style={{ maxWidth: "50%", height: "auto" }}
+          />
+          <p>
+            {nombre} {apellido}
+          </p>
         </div>
         <div className="col-md-7 marginLeft-rating">
           <Stack spacing={1} justifyContent="center" alignItems="center">
-            <Rating name="size-medium" readOnly precision={0.5} defaultValue={promedios} />
+            <Rating
+              name="size-medium"
+              readOnly
+              precision={0.5}
+              defaultValue={promedios}
+            />
           </Stack>
         </div>
       </div>
@@ -173,9 +254,13 @@ const Sidebar = () => {
         </Link>
 
         <Link href="/activacion-de-alarma">
-          <ListItem className="item-list" style={{ backgroundColor: '#f9f6f2', borderRadius: '8px' }}>
+          <ListItem
+            className="item-list"
+            style={{ backgroundColor: "#f9f6f2", borderRadius: "8px" }}
+          >
             <ListItemIcon>
-              <FaPaw style={{ color: '#d97706', fontSize: '24px' }} /> {/* Ícono de huella de perrito en color personalizado */}
+              <FaPaw style={{ color: "#d97706", fontSize: "24px" }} />{" "}
+              {/* Ícono de huella de perrito en color personalizado */}
             </ListItemIcon>
             <ListItemText primary="Slinky el perro" />
           </ListItem>
@@ -185,7 +270,12 @@ const Sidebar = () => {
   );
 
   const listP = () => (
-    <Box sx={{ width: '100%' }} role="presentation" onClick={toggleDrawerP(false)} onKeyDown={toggleDrawerP(false)}>
+    <Box
+      sx={{ width: "100%" }}
+      role="presentation"
+      onClick={toggleDrawerP(false)}
+      onKeyDown={toggleDrawerP(false)}
+    >
       <List>
         <Link href="/plataforma-especialista">
           <ListItem className="item-list">
@@ -209,18 +299,23 @@ const Sidebar = () => {
 
   return (
     <div>
-      <Drawer anchor={'left'} open={isOpen} onClose={toggleDrawer(false)}>
+      <Drawer anchor={"left"} open={isOpen} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
-      <Drawer anchor={'top'} open={isOpenP} onClose={toggleDrawerP(false)}>
+      <Drawer anchor={"top"} open={isOpenP} onClose={toggleDrawerP(false)}>
         {listP()}
       </Drawer>
-      <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`} style={{ marginBottom: '4em', padding: '0 1em' }}>
-
-        <ul className="navbar-nav me-auto" style={{ listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+      <nav
+        className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`}
+        style={{ marginBottom: "4em", padding: "0 1em" }}
+      >
+        <ul
+          className="navbar-nav me-auto"
+          style={{ listStyle: "none", display: "flex", alignItems: "center" }}
+        >
           <li className="nav-item">
             <Button
-              style={{ fontSize: '25px', color: 'white', marginLeft: '-20px' }}
+              style={{ fontSize: "25px", color: "white", marginLeft: "-20px" }}
               onClick={toggleDrawer(true)}
               className={`${styles.toggleButton} btn btn-link`}
             >
@@ -229,23 +324,70 @@ const Sidebar = () => {
           </li>
         </ul>
 
-        <div className="navbar-nav ms-auto" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <div
+          className="navbar-nav ms-auto"
+          style={{ display: "flex", alignItems: "center", gap: "15px" }}
+        >
           {/* Botón de alerta */}
-          <Button className="btn btn-warning mx-2" style={{ display: 'flex', alignItems: 'center', width: 'auto' }}>
-            <img src="/icons/noti.png" alt="Alerta" style={{ width: '20px', height: '20px', color: 'white' }} />
+          <Button
+            className="btn btn-warning mx-2"
+            style={{ display: "flex", alignItems: "center", width: "auto" }}
+          >
+            <img
+              src="/icons/noti.png"
+              alt="Alerta"
+              style={{ width: "20px", height: "20px", color: "white" }}
+            />
           </Button>
           {/* Botón de notificaciones */}
-          <Button className="btn btn-info mx-2" style={{ display: 'flex', alignItems: 'center', background: 'rgb(164,203,180)',border:'0px' }}>
-            <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '21px' }} />
+          <Button
+            className="btn btn-info mx-2"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              background: "rgb(164,203,180)",
+              border: "0px",
+            }}
+            onClick={handleAlertClick}
+          >
+            <img
+              src="/icons/alert.png"
+              alt="Alerta"
+              style={{ width: "20px", height: "21px" }}
+            />
           </Button>
+
+          {/* Modal de confirmación de alarma */}
+          <Dialog open={modalOpen} onClose={handleCloseModal}>
+            <DialogTitle>
+              ¿Está seguro que desea activar la alarma de emergencia? 
+            </DialogTitle>
+            <p><center><alignItems>En ese caso, escribe un motivo por el cual desea activar para informar a los demás integrantes del grupo.</alignItems></center></p>
+            <DialogContent>
+              <textarea
+                value={alarmReason} // Vinculamos el valor del textarea con el estado
+                onChange={handleAlarmReasonChange} // Actualizamos el estado cada vez que el usuario escribe
+                placeholder="Escriba el motivo para activar la alarma"
+                className="form-control"
+                rows={4} // Puedes ajustar este valor para que el cuadro sea más grande
+                style={{ resize: "none" }} // Esto evitará que el cuadro de texto se redimensione
+              ></textarea>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseModal} color="secondary">
+                No, Ignorar
+              </Button>
+              <Button onClick={handleConfirmAlarm} color="primary">
+                Sí, Activar
+              </Button>
+            </DialogActions>
+          </Dialog>
           {/* Botón del usuario con icono y nombre */}
           {/* <div className="d-flex align-items-center">
             <img src="/path/to/user-icon.png" alt="Usuario" className="rounded-circle" style={{ width: '30px', marginRight: '8px' }} />
             <span style={{ color: 'white', fontSize: '1em' }}>Usuario</span>
           </div> */}
         </div>
-       
-
       </nav>
       <footer className={styles.footer}>
         <a>LA SEGURIDAD CIUDADANA ES TAREA DE TODOS NO DE UNA SOLA PERSONA</a>
