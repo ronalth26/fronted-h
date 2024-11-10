@@ -9,6 +9,7 @@ import '../estilos/globales.css';
 import useToken from '../utils/auth';
 import { Nav, Tab, Row, Col } from 'react-bootstrap';
 import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
+import { Modal, Button } from 'react-bootstrap';
 export default function Inicio() {
 
 
@@ -306,12 +307,12 @@ export default function Inicio() {
           </div>
 
 
-          
+
           < div class="col-3">
 
-          <img src='/icons/1.png' style={{width:'200px'}}></img>
+            <img src='/icons/1.png' style={{ width: '200px' }}></img>
           </div>
-        </div>        
+        </div>
 
 
         <div className="container my-4">
@@ -342,9 +343,11 @@ export default function Inicio() {
                 <option value="Yanahuara" />
                 {/* Add more districts as needed */}
               </datalist>
-              <button className="btn btn-primary ms-2">
-                <i className="fas fa-map-marker-alt"></i>+
-              </button>
+              <a href="/nueva-publicacion">
+                <button className="btn btn-primary ms-2">
+                  <i className="fas fa-map-marker-alt"></i> Nueva Publicación
+                </button>
+              </a>
             </div>
             <div>
               <button className="btn btn-outline-primary">
@@ -503,9 +506,25 @@ export default function Inicio() {
           </div>
         </div>
 
+        {filteredServices.map(service => (
+          <div key={service.idCategoria} className="col-md-4 mb-3">
+            <a href={'/registro-de-solicitudes/' + service.idCategoria}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{service.nombreCategoria}</h5>
+                  <p className="card-text">{service.count} encuentra especialistas</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
 
 
       </div>
     </>
   );
+
+
+  
+  
 }
