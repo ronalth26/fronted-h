@@ -27,14 +27,16 @@ import {
   FaInfoCircle,
   FaPaw,
   FaQuestionCircle,
-  FaTimes
+  FaTimes,
 } from "react-icons/fa";
 import { useJwt } from "react-jwt";
 import { DOMAIN_BACK, DOMAIN_FRONT } from "../../../env";
 import "../estilos/globales.css";
 import useToken from "../utils/auth";
+import AlarmDialog from "./AlarmDialog";
 import "./listaSidebar.css";
 import styles from "./sidebar.module.css";
+
 
 const Sidebar = () => {
   const { Token } = useToken();
@@ -45,6 +47,7 @@ const Sidebar = () => {
   const [notifications, setNotifications] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openPopover, setOpenPopover] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   // Simulación de las notificaciones
   useEffect(() => {
@@ -168,7 +171,9 @@ const Sidebar = () => {
   };
 
   const handleAlertClick = () => {
-    setModalOpen(true);
+    setShowDialog(true);
+    //console.log("Modal Open State:", modalOpen);
+    //console.log("Boton de alerta");
   };
 
   //const handleOpenModal = () => {
@@ -198,6 +203,9 @@ const Sidebar = () => {
     setIsAlarmActive(!isAlarmActive); // Cambiar el estado de la alarma a activa
     handleCloseModal();
     // Aquí puedes hacer cualquier lógica adicional para activar la alarma
+    console.log("Alarma activada con motivo:", alarmReason);
+    setShowDialog(false);
+    setAlarmReason(""); // Limpiar el motivo después de confirmar
   };
 
   const ModalBox = ({ children }) => (
@@ -376,32 +384,31 @@ const Sidebar = () => {
           className="navbar-nav ms-auto"
           style={{ display: "flex", alignItems: "center", gap: "15px" }}
         >
-          {/* Botón de notificaciones */}
-          <Button
-            className="btn btn-info mx-2"
-            style={{ backgroundColor: getButtonColor() }}
-            onClick={handleAlertClick}
-          >
-            <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '21px' }} />
-          </Button>
+          <>
+            {/* Botón de alerta */}
+            <Button
+              className="btn btn-info mx-2"
+              style={{ backgroundColor: getButtonColor() }}
+              onClick={handleAlertClick}
+            >
+              <img
+                src="/icons/alert.png"
+                alt="Alerta"
+                style={{ width: "20px", height: "21px" }}
+              />
+            </Button>
 
-          {/* Modal de Confirmación */}
-      {modalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>¿Está seguro que desea activar la alarma de emergencia?</h2>
-            <textarea
-              placeholder="Escriba un motivo para activar la alarma"
-              value={alarmReason}
-              onChange={(e) => setAlarmReason(e.target.value)}
+            {/* Diálogo de activación de alarma */}
+            <AlarmDialog
+              open={showDialog}
+              onClose={() => setShowDialog(false)}
+              onConfirm={handleConfirmAlarm}
+              alarmReason={alarmReason}
+              onReasonChange={(e) => setAlarmReason(e.target.value)}
             />
-            <button onClick={handleCloseModal}>No, ignorar</button>
-            <button onClick={handleConfirmAlarm}>Sí, activar</button>
-          </div>
-        </div>
-      )}
+          </>
 
-          {/* Botón de alerta */}
+          {/* Botón de notificaciones */}
           <Button
             className="btn btn-warning mx-2"
             onClick={handlePopoverOpen}
