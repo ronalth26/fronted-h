@@ -14,21 +14,22 @@ import "./activacion-de-alarma-module.css";
 
 const ActivacionAlarma = () => {
   const [users, setUsers] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [selectedDistrict, setSelectedDistrict] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const [groupUsers, setGroupUsers] = useState([]);
-  const [alarmReason, setAlarmReason] = useState('');
+  const [alarmReason, setAlarmReason] = useState("");
   const [isGroupAlarmActive, setIsGroupAlarmActive] = useState(false);
   const [alarmReasons, setAlarmReasons] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     if (selectedDistrict) {
       const mockUsers = {
-        "Cercado": [{ name: 'Pedro Paredes' }, { name: 'Ana Flores' }],
-        "Yanahuara": [{ name: 'Luis Arce' }, { name: 'Sofia Castillo' }],
-        "Miraflores": [{ name: 'Carlos Pérez' }, { name: 'Maria Garcia' }],
-        "Paucarpata": [{ name: 'Elena Fernandez' }, { name: 'Jose Huamani' }],
-        "Mariano Melgar": [{ name: 'Luis Lopez' }, { name: 'Rosa Alvarez' }]
+        Cercado: [{ name: "Pedro Paredes" }, { name: "Ana Flores" }],
+        Yanahuara: [{ name: "Luis Arce" }, { name: "Sofia Castillo" }],
+        Miraflores: [{ name: "Carlos Pérez" }, { name: "Maria Garcia" }],
+        Paucarpata: [{ name: "Elena Fernandez" }, { name: "Jose Huamani" }],
+        "Mariano Melgar": [{ name: "Luis Lopez" }, { name: "Rosa Alvarez" }],
       };
       setUsers(mockUsers[selectedDistrict] || []);
     }
@@ -39,51 +40,77 @@ const ActivacionAlarma = () => {
   };
 
   const handleAddUser = (user) => {
-    if (!groupUsers.some(u => u.name === user.name)) {
+    if (!groupUsers.some((u) => u.name === user.name)) {
       setGroupUsers([...groupUsers, { ...user, alarmActive: false }]);
     }
   };
 
   const toggleAlarm = (user) => {
-    const updatedUsers = groupUsers.map(u => 
+    const updatedUsers = groupUsers.map((u) =>
       u.name === user.name ? { ...u, alarmActive: !u.alarmActive } : u
     );
     setGroupUsers(updatedUsers);
     if (!user.alarmActive && alarmReason.trim) {
-      setAlarmReasons([...alarmReasons, { user: user.name, reason: alarmReason }]);
+      setAlarmReasons([
+        ...alarmReasons,
+        { user: user.name, reason: alarmReason },
+      ]);
     }
+  };
+
+  const toggleAlarmDialog = (user) => {
+    setSelectedUser(user);
+    setShowDialog(true);
   };
 
   const handleGroupAlarmToggle = () => {
     setShowDialog(true);
   };
 
-  const confirmAlarmActivation = () => {
-    if (!alarmReason.trim()) {
-      alert('Por favor ingrese un motivo para activar la alarma');
-      return;
+  const handleAlarmReasonChange = (e) => {
+    setAlarmReason(e.target.value);
+  };
+
+  const handleConfirmAlarm = () => {
+    if (alarmReason.trim()) {
+      setAlarmReasons([
+        ...alarmReasons,
+        { user: selectedUser.name, reason: alarmReason },
+      ]);
+      setAlarmReason("");
+      setShowDialog(false);
+    } else {
+      alert("Por favor ingrese un motivo para activar la alarma");
     }
-    
-    const userName = 'Pepe Ruiz Paz'; // Asegúrate de asignar el usuario que está activando la alarma
-    setAlarmReasons([...alarmReasons, { user: userName, reason: alarmReason }]);
-    setIsGroupAlarmActive(!isGroupAlarmActive);
-    setShowDialog(false);
-    setAlarmReason('');
   };
 
   return (
-    <div className="container-fluid activacion-alarma" style={{ marginTop: '60px' }}>
+    <div
+      className="container-fluid activacion-alarma"
+      style={{ marginTop: "60px" }}
+    >
       <Sidebar />
       <ToastContainer />
-      
+
       <div className="header d-flex justify-content-between align-items-center mt-3">
         <h1>Grupo de Vecinos</h1>
       </div>
-      
+
       <div className="search-section mt-3">
-        <input type="text" placeholder="Buscar Usuario por nombre" className="form-control d-inline-block" style={{ width: '300px' }} />
-        <span className="mx-2"><i className="fas fa-search"></i></span>
-        <select className="form-select d-inline-block" style={{ width: '200px' }} onChange={handleDistrictChange}>
+        <input
+          type="text"
+          placeholder="Buscar Usuario por nombre"
+          className="form-control d-inline-block"
+          style={{ width: "300px" }}
+        />
+        <span className="mx-2">
+          <i className="fas fa-search"></i>
+        </span>
+        <select
+          className="form-select d-inline-block"
+          style={{ width: "200px" }}
+          onChange={handleDistrictChange}
+        >
           <option value="">Distrito</option>
           <option value="Cercado">Cercado</option>
           <option value="Yanahuara">Yanahuara</option>
@@ -91,9 +118,14 @@ const ActivacionAlarma = () => {
           <option value="Sachaca">Sachaca</option>
           <option value="Paucarpata">Paucarpata</option>
         </select>
-        <Button 
-          onClick={() => handleAddUser(users[0])} 
-          style={{ backgroundColor: 'rgba(255,193,7,255)', color: '#000', border: 'none', marginLeft: '10px' }}
+        <Button
+          onClick={() => handleAddUser(users[0])}
+          style={{
+            backgroundColor: "rgba(255,193,7,255)",
+            color: "#000",
+            border: "none",
+            marginLeft: "10px",
+          }}
         >
           Agregar
         </Button>
@@ -101,18 +133,33 @@ const ActivacionAlarma = () => {
 
       <div className="users-list mt-4">
         {groupUsers.map((user, index) => (
-          <div key={index} className="user-item d-flex align-items-center justify-content-between mb-2" style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
+          <div
+            key={index}
+            className="user-item d-flex align-items-center justify-content-between mb-2"
+            style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
+          >
             <span className="me-2" style={{ flex: 1 }}>{user.name}</span>
             <Button
               className="btn btn-info"
-              style={{ background: 'rgb(164,203,180)', border: '0px', display: 'flex', alignItems: 'center' }}
-              onClick={() => toggleAlarm(user)}
+              style={{
+                background: "rgb(164,203,180)",
+                border: "0px",
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={() => toggleAlarmDialog(user)}
             >
-              <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '21px' }} />
+              <img
+                src="/icons/alert.png"
+                alt="Alerta"
+                style={{ width: "20px", height: "21px" }}
+              />
             </Button>
-            <Button 
-              variant="outline-danger" 
-              onClick={() => setGroupUsers(groupUsers.filter(u => u.name !== user.name))}
+            <Button
+              variant="outline-danger"
+              onClick={() =>
+                setGroupUsers(groupUsers.filter((u) => u.name !== user.name))
+              }
               className="ms-2"
             >
               🗑️
@@ -123,26 +170,40 @@ const ActivacionAlarma = () => {
 
       <div className="alarm-reasons mt-4">
         <h2>Motivo de Alarma</h2>
-        {alarmReasons.map((reason, index) => (
-          <p key={index}><strong>{reason.user}:</strong> {reason.reason}</p>
-        ))}
+        <div className="alarm-history">
+          {alarmReasons.map((reason, index) => (
+            <div key={index} className="alarm-entry">
+              <strong>{reason.user}:</strong> <span>{reason.reason}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
-        <DialogTitle>¿Esta seguro que desea activar la alarma de emergencia? En ese caso escribe un motivo por el cual desea activar para informar a los demás integrantes del grupo.</DialogTitle>
+        <DialogTitle>
+          ¿Está seguro que desea activar la alarma de emergencia?
+        </DialogTitle>
+        <p>
+          <center>
+            En ese caso, escribe un motivo por el cual desea activar para
+            informar a los demás integrantes del grupo.
+          </center>
+        </p>
         <DialogContent>
-          <textarea 
-            placeholder="Escriba el motivo para activar la alarma"
-            onChange={(e) => setAlarmReason(e.target.value)}
+          <textarea
             value={alarmReason}
+            onChange={handleAlarmReasonChange}
+            placeholder="Escriba el motivo para activar la alarma"
             className="form-control"
+            rows={4}
+            style={{ resize: "none" }}
           ></textarea>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowDialog(false)} color="secondary">
             No, Ignorar
           </Button>
-          <Button onClick={confirmAlarmActivation} color="primary">
+          <Button onClick={handleConfirmAlarm} color="primary">
             Sí, Activar
           </Button>
         </DialogActions>

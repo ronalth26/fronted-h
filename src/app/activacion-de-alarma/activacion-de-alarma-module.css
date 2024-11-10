@@ -30,3 +30,29 @@ background-color: rgb(0,38,59);
   margin-bottom: 60px; /* Ajustar el margen inferior para no quedar debajo de la barra inferior */
   padding: 10px;
 }
+
+.alarm-reasons {
+  margin-top: 20px;
+}
+
+.alarm-history {
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.alarm-entry {
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #eef6ef;
+  border-left: 4px solid #8fbc8f;
+  border-radius: 4px;
+}
+
+.alarm-entry strong {
+  color: #333;
+}
+
