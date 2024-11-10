@@ -615,18 +615,7 @@ export default function Inicio() {
         </div>
       </div>
 
-      {filteredServices.map(service => (
-        <div key={service.idCategoria} className="col-md-4 mb-3">
-          <a href={'/registro-de-solicitudes/' + service.idCategoria}>
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{service.nombreCategoria}</h5>
-                <p className="card-text">{service.count} encuentra especialistas</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      ))}
+     
 
 
 
