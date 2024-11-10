@@ -7,9 +7,9 @@ import '../boostrap.css';
 import Sidebar from '../components/sidebar';
 import '../estilos/globales.css';
 import useToken from '../utils/auth';
-import { Nav, Tab, Row, Col, Modal } from 'react-bootstrap';
+import { Nav, Tab, Row, Col, Modal,Button } from 'react-bootstrap';
 import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
-import { Modal, Button } from 'react-bootstrap';
+
 export default function Inicio() {
   const [showChat, setShowChat] = useState(false);
 
@@ -116,7 +116,7 @@ export default function Inicio() {
           <div class="col-6 text-center">
 
             <div class="row justify-content-center">
-            <table className="table text-center align-middle w-75" style={{ color: "red", width: "10px" }}>
+              <table className="table text-center align-middle w-75" style={{ color: "red", width: "10px" }}>
 
                 <tbody>
                   <tr>
@@ -305,343 +305,337 @@ export default function Inicio() {
             </div>
           </div>
 
-<<<<<<< HEAD
 
 
           < div class="col-3">
 
-            <img src='/icons/1.png' style={{ width: '200px' }}></img>
-          </div>
-        </div>
-=======
-          < div class="col-3">
 
           </div>
         </div>
+        < div class="col-3">
 
-        {/* Botón para abrir el chat */}
-        <div
-          className="chatbot-button"
-          style={{
-            position: 'fixed',
-            bottom: '20px',
-            marginBottom: '40px',
-            right: '20px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            padding: '15px',
-            cursor: 'pointer',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          }}
-          onClick={handleChatOpen}
-        >
-          <img
-            src="/icons/3.png"
-            alt="Chat Icon"
-            style={{ width: '50px', height: '50px' }}
-          />
         </div>
-        {/* cerrar boton para modal */}
+      </div>
+
+      {/* Botón para abrir el chat */}
+      <div
+        className="chatbot-button"
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          marginBottom: '40px',
+          right: '20px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '50%',
+          padding: '15px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        }}
+        onClick={handleChatOpen}
+      >
+        <img
+          src="/icons/3.png"
+          alt="Chat Icon"
+          style={{ width: '50px', height: '50px' }}
+        />
+      </div>
+      {/* cerrar boton para modal */}
 
 
-        {/* Modal del Chat */}
-        <Modal show={showChat} onHide={handleChatClose} size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>
-              <img
-                src="/icons/a1.png"
-                alt="Chatbot"
-                style={{ width: '40px', height: '40px', marginRight: '10px' }}
-              />
-              Chatbot
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div
-              className="chat-box"
-              style={{
-                minHeight: '300px',
-                maxHeight: '400px',
-                overflowY: 'auto',
-                padding: '15px',
-                backgroundColor: '#f1f1f1',
-                borderRadius: '8px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-              }}
-            >
-              <div className="chat-message bot-message">
-                <p style={{ backgroundColor: '#007bff', color: 'white', padding: '10px', borderRadius: '10px' }}>
-                  ¡Hola! ¿En qué puedo ayudarte hoy?
-                </p>
-              </div>
-              <div className="chat-message user-message">
-                <p
-                  style={{
-                    backgroundColor: '#e2e2e2',
-                    padding: '10px',
-                    borderRadius: '10px',
-                  }}
-                >
-                  ¿Cuáles son los servicios que ofreces?
-                </p>
-              </div>
-              <div className="chat-message bot-message">
-                <p style={{ backgroundColor: '#007bff', color: 'white', padding: '10px', borderRadius: '10px' }}>
-                  Ofrecemos bomberos, policía, ambulancia, y más. ¿Te gustaría más información sobre algún servicio?
-                </p>
-              </div>
+      {/* Modal del Chat */}
+      <Modal show={showChat} onHide={handleChatClose} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <img
+              src="/icons/a1.png"
+              alt="Chatbot"
+              style={{ width: '40px', height: '40px', marginRight: '10px' }}
+            />
+            Chatbot
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div
+            className="chat-box"
+            style={{
+              minHeight: '300px',
+              maxHeight: '400px',
+              overflowY: 'auto',
+              padding: '15px',
+              backgroundColor: '#f1f1f1',
+              borderRadius: '8px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}
+          >
+            <div className="chat-message bot-message">
+              <p style={{ backgroundColor: '#007bff', color: 'white', padding: '10px', borderRadius: '10px' }}>
+                ¡Hola! ¿En qué puedo ayudarte hoy?
+              </p>
             </div>
-            {/* fin modal */}
-
-            {/* Campo de texto para la respuesta del usuario */}
-            <div className="chat-input" style={{ marginTop: '15px' }}>
-              <input
-                type="text"
-                placeholder="Escribe tu mensaje..."
-                className="form-control"
+            <div className="chat-message user-message">
+              <p
                 style={{
-                  borderRadius: '20px',
+                  backgroundColor: '#e2e2e2',
                   padding: '10px',
-                  border: '1px solid #ccc',
-                }}
-              />
-              <button
-                className="btn btn-primary mt-2"
-                style={{
-                  borderRadius: '20px',
-                  width: '100%',
-                  padding: '10px',
-                  fontSize: '16px',
+                  borderRadius: '10px',
                 }}
               >
-                Enviar
-              </button>
+                ¿Cuáles son los servicios que ofreces?
+              </p>
             </div>
-          </Modal.Body>
-
-        </Modal>
->>>>>>> c76639d7f511edbb605d144fbd33cb1fbc794a4b
-
-
-        <div className="container my-4">
-          {/* Top Navigation */}
-<<<<<<< HEAD
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <div className="d-flex align-items-center">
-              <label className="me-2">Distrito:</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Selecciona distrito"
-                style={{
-                  maxWidth: "200px",
-                  backgroundColor: "#f8f9fa", // Light gray background for the input
-                  borderColor: "#ced4da" // Light border color for contrast
-                }}
-                list="distritos" // Links input to the datalist below
-              />
-              <datalist id="distritos">
-                <option value="Arequipa" />
-                <option value="Cayma" />
-                <option value="Cerro Colorado" />
-                <option value="Mariano Melgar" />
-                <option value="Miraflores" />
-                <option value="Paucarpata" />
-                <option value="Sachaca" />
-                <option value="Socabaya" />
-                <option value="Yanahuara" />
-                {/* Add more districts as needed */}
-              </datalist>
-              <a href="/nueva-publicacion">
-                <button className="btn btn-primary ms-2">
-                  <i className="fas fa-map-marker-alt"></i> Nueva Publicación
-                </button>
-              </a>
-            </div>
-            <div>
-              <button className="btn btn-outline-primary">
-                <i className="fas fa-plus"></i> Mis publicaciones
-              </button>
+            <div className="chat-message bot-message">
+              <p style={{ backgroundColor: '#007bff', color: 'white', padding: '10px', borderRadius: '10px' }}>
+                Ofrecemos bomberos, policía, ambulancia, y más. ¿Te gustaría más información sobre algún servicio?
+              </p>
             </div>
           </div>
-=======
->>>>>>> c76639d7f511edbb605d144fbd33cb1fbc794a4b
+          {/* fin modal */}
 
-          {/* Navigation Tabs */}
-          <div className="container mt-5">
-            <Tab.Container id="left-tabs-example" activeKey={key} onSelect={(k) => setKey(k)}>
-              <Row>
-                <Col sm={12}>
-                  {/* Horizontal buttons */}
-                  <Nav variant="pills" className="d-flex justify-content-start gap-3">
-                    <Nav.Item>
-                      <Nav.Link eventKey="noticias" className="btn-custom">
-                        <i className="fas fa-newspaper"></i> Noticias
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="afiches" className="btn-custom">
-                        <i className="fas fa-image"></i> Afiches
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="consejo" className="btn-custom">
-                        <i className="fas fa-lightbulb"></i> Consejos
-                      </Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                </Col>
+          {/* Campo de texto para la respuesta del usuario */}
+          <div className="chat-input" style={{ marginTop: '15px' }}>
+            <input
+              type="text"
+              placeholder="Escribe tu mensaje..."
+              className="form-control"
+              style={{
+                borderRadius: '20px',
+                padding: '10px',
+                border: '1px solid #ccc',
+              }}
+            />
+            <button
+              className="btn btn-primary mt-2"
+              style={{
+                borderRadius: '20px',
+                width: '100%',
+                padding: '10px',
+                fontSize: '16px',
+              }}
+            >
+              Enviar
+            </button>
+          </div>
+        </Modal.Body>
 
-                <Col sm={12}>
-                  <Tab.Content>
-                    {/* Noticias Tab */}
-                    <Tab.Pane eventKey="noticias">
-                      <div className="content-section card p-3 mb-3">
-                        <h3 className="mb-2 text-center">Título de la Noticia</h3>
+      </Modal>
 
-                        {/* Fecha y Distrito */}
-                        <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
 
-                        {/* Descripción */}
-                        <p className="text-center mb-3">Breve descripción de la noticia que da una idea general del contenido.</p>
-
-                        {/* Estrellas y botón debajo de la imagen */}
-                        <div className="d-flex flex-column align-items-center">
-                          {/* Imagen */}
-                          <img src="https://via.placeholder.com/150" alt="Imagen de Noticia" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
-
-                          {/* Estrellas y botón de compartir al lado */}
-                          <div className="d-flex align-items-center">
-                            {/* Estrellas */}
-                            <div className="star-rating d-flex align-items-center me-3">
-                              {[...Array(5)].map((_, i) => (
-                                <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
-                              ))}
-                            </div>
-
-                            {/* Botón de Compartir */}
-                            <div className="d-flex flex-column align-items-center">
-                              <button className="btn btn-outline-primary d-flex align-items-center">
-                                <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
-                              </button>
-                              <small>Compartir</small>
-                            </div>
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </Tab.Pane>
-
-                    {/* Afiches Tab */}
-                    <Tab.Pane eventKey="afiches">
-                      <div className="content-section card p-3 mb-3">
-                        <h3 className="mb-2 text-center">Título de la Afiche</h3>
-
-                        {/* Fecha y Distrito */}
-                        <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
-
-                        {/* Descripción */}
-                        <p className="text-center mb-3">Breve descripción del afiche que da una idea general del contenido.</p>
-
-                        {/* Estrellas y botón debajo de la imagen */}
-                        <div className="d-flex flex-column align-items-center">
-                          {/* Imagen */}
-                          <img src="https://via.placeholder.com/150" alt="Imagen de Afiche" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
-
-                          {/* Estrellas y botón de compartir al lado */}
-                          <div className="d-flex align-items-center">
-                            {/* Estrellas */}
-                            <div className="star-rating d-flex align-items-center me-3">
-                              {[...Array(5)].map((_, i) => (
-                                <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
-                              ))}
-                            </div>
-
-                            {/* Botón de Compartir */}
-                            <div className="d-flex flex-column align-items-center">
-                              <button className="btn btn-outline-primary d-flex align-items-center">
-                                <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
-                              </button>
-                              <small>Compartir</small>
-                            </div>
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </Tab.Pane>
-
-                    {/* Consejos Tab */}
-                    <Tab.Pane eventKey="consejo">
-                      <div className="content-section card p-3 mb-3">
-                        <h3 className="mb-2 text-center">Título de la Consejo</h3>
-
-                        {/* Fecha y Distrito */}
-                        <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
-
-                        {/* Descripción */}
-                        <p className="text-center mb-3">Breve descripción del consejo que da una idea general del contenido.</p>
-
-                        {/* Estrellas y botón debajo de la imagen */}
-                        <div className="d-flex flex-column align-items-center">
-                          {/* Imagen */}
-                          <img src="https://via.placeholder.com/150" alt="Imagen del Consejo" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
-
-                          {/* Estrellas y botón de compartir al lado */}
-                          <div className="d-flex align-items-center">
-                            {/* Estrellas */}
-                            <div className="star-rating d-flex align-items-center me-3">
-                              {[...Array(5)].map((_, i) => (
-                                <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
-                              ))}
-                            </div>
-
-                            {/* Botón de Compartir */}
-                            <div className="d-flex flex-column align-items-center">
-                              <button className="btn btn-outline-primary d-flex align-items-center">
-                                <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
-                              </button>
-                              <small>Compartir</small>
-                            </div>
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </Tab.Pane>
-                  </Tab.Content>
-                </Col>
-              </Row>
-            </Tab.Container>
+      <div className="container my-4">
+        {/* Top Navigation */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex align-items-center">
+            <label className="me-2">Distrito:</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Selecciona distrito"
+              style={{
+                maxWidth: "200px",
+                backgroundColor: "#f8f9fa", // Light gray background for the input
+                borderColor: "#ced4da" // Light border color for contrast
+              }}
+              list="distritos" // Links input to the datalist below
+            />
+            <datalist id="distritos">
+              <option value="Arequipa" />
+              <option value="Cayma" />
+              <option value="Cerro Colorado" />
+              <option value="Mariano Melgar" />
+              <option value="Miraflores" />
+              <option value="Paucarpata" />
+              <option value="Sachaca" />
+              <option value="Socabaya" />
+              <option value="Yanahuara" />
+              {/* Add more districts as needed */}
+            </datalist>
+            <a href="/nueva-publicacion">
+              <button className="btn btn-primary ms-2">
+                <i className="fas fa-map-marker-alt"></i> Nueva Publicación
+              </button>
+            </a>
+          </div>
+          <div>
+            <button className="btn btn-outline-primary">
+              <i className="fas fa-plus"></i> Mis publicaciones
+            </button>
           </div>
         </div>
 
-        {filteredServices.map(service => (
-          <div key={service.idCategoria} className="col-md-4 mb-3">
-            <a href={'/registro-de-solicitudes/' + service.idCategoria}>
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{service.nombreCategoria}</h5>
-                  <p className="card-text">{service.count} encuentra especialistas</p>
-                </div>
+        {/* Navigation Tabs */}
+        <div className="container mt-5">
+          <Tab.Container id="left-tabs-example" activeKey={key} onSelect={(k) => setKey(k)}>
+            <Row>
+              <Col sm={12}>
+                {/* Horizontal buttons */}
+                <Nav variant="pills" className="d-flex justify-content-start gap-3">
+                  <Nav.Item>
+                    <Nav.Link eventKey="noticias" className="btn-custom">
+                      <i className="fas fa-newspaper"></i> Noticias
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="afiches" className="btn-custom">
+                      <i className="fas fa-image"></i> Afiches
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="consejo" className="btn-custom">
+                      <i className="fas fa-lightbulb"></i> Consejos
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+
+              <Col sm={12}>
+                <Tab.Content>
+                  {/* Noticias Tab */}
+                  <Tab.Pane eventKey="noticias">
+                    <div className="content-section card p-3 mb-3">
+                      <h3 className="mb-2 text-center">Título de la Noticia</h3>
+
+                      {/* Fecha y Distrito */}
+                      <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+
+                      {/* Descripción */}
+                      <p className="text-center mb-3">Breve descripción de la noticia que da una idea general del contenido.</p>
+
+                      {/* Estrellas y botón debajo de la imagen */}
+                      <div className="d-flex flex-column align-items-center">
+                        {/* Imagen */}
+                        <img src="https://via.placeholder.com/150" alt="Imagen de Noticia" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+
+                        {/* Estrellas y botón de compartir al lado */}
+                        <div className="d-flex align-items-center">
+                          {/* Estrellas */}
+                          <div className="star-rating d-flex align-items-center me-3">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                            ))}
+                          </div>
+
+                          {/* Botón de Compartir */}
+                          <div className="d-flex flex-column align-items-center">
+                            <button className="btn btn-outline-primary d-flex align-items-center">
+                              <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                            </button>
+                            <small>Compartir</small>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </Tab.Pane>
+
+                  {/* Afiches Tab */}
+                  <Tab.Pane eventKey="afiches">
+                    <div className="content-section card p-3 mb-3">
+                      <h3 className="mb-2 text-center">Título de la Afiche</h3>
+
+                      {/* Fecha y Distrito */}
+                      <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+
+                      {/* Descripción */}
+                      <p className="text-center mb-3">Breve descripción del afiche que da una idea general del contenido.</p>
+
+                      {/* Estrellas y botón debajo de la imagen */}
+                      <div className="d-flex flex-column align-items-center">
+                        {/* Imagen */}
+                        <img src="https://via.placeholder.com/150" alt="Imagen de Afiche" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+
+                        {/* Estrellas y botón de compartir al lado */}
+                        <div className="d-flex align-items-center">
+                          {/* Estrellas */}
+                          <div className="star-rating d-flex align-items-center me-3">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                            ))}
+                          </div>
+
+                          {/* Botón de Compartir */}
+                          <div className="d-flex flex-column align-items-center">
+                            <button className="btn btn-outline-primary d-flex align-items-center">
+                              <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                            </button>
+                            <small>Compartir</small>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </Tab.Pane>
+
+                  {/* Consejos Tab */}
+                  <Tab.Pane eventKey="consejo">
+                    <div className="content-section card p-3 mb-3">
+                      <h3 className="mb-2 text-center">Título de la Consejo</h3>
+
+                      {/* Fecha y Distrito */}
+                      <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+
+                      {/* Descripción */}
+                      <p className="text-center mb-3">Breve descripción del consejo que da una idea general del contenido.</p>
+
+                      {/* Estrellas y botón debajo de la imagen */}
+                      <div className="d-flex flex-column align-items-center">
+                        {/* Imagen */}
+                        <img src="https://via.placeholder.com/150" alt="Imagen del Consejo" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+
+                        {/* Estrellas y botón de compartir al lado */}
+                        <div className="d-flex align-items-center">
+                          {/* Estrellas */}
+                          <div className="star-rating d-flex align-items-center me-3">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                            ))}
+                          </div>
+
+                          {/* Botón de Compartir */}
+                          <div className="d-flex flex-column align-items-center">
+                            <button className="btn btn-outline-primary d-flex align-items-center">
+                              <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                            </button>
+                            <small>Compartir</small>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+        </div>
+      </div>
+
+      {filteredServices.map(service => (
+        <div key={service.idCategoria} className="col-md-4 mb-3">
+          <a href={'/registro-de-solicitudes/' + service.idCategoria}>
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{service.nombreCategoria}</h5>
+                <p className="card-text">{service.count} encuentra especialistas</p>
               </div>
-            </a>
-          </div>
-        ))}
+            </div>
+          </a>
+        </div>
+      ))}
 
 
-      </div >
+
 
 
     </>
   );
 
 
-  
-  
+
+
 }
