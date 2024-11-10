@@ -7,20 +7,23 @@ import '../boostrap.css';
 import Sidebar from '../components/sidebar';
 import '../estilos/globales.css';
 import useToken from '../utils/auth';
-import { Nav, Tab, Row, Col, Modal,Button } from 'react-bootstrap';
+import { Nav, Tab, Row, Col, Modal, Button } from 'react-bootstrap';
 import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
 
 export default function Inicio() {
   const [showChat, setShowChat] = useState(false);
+  const [showForm_NewPost, setshowForm_NewPost] = useState(false);
 
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
 
   // Función para abrir el modal del chat
   const handleChatOpen = () => setShowChat(true);
+  const handleChatOpen_NewPost = () => setshowForm_NewPost(true);
 
   // Función para cerrar el modal del chat
   const handleChatClose = () => setShowChat(false);
+  const handleChatClose_NewPost = () => setshowForm_NewPost(false);
 
   // useEffect(() => {
   //   if (isExpired || !decodedToken) {
@@ -424,6 +427,150 @@ export default function Inicio() {
       </Modal>
 
 
+      {/* Modal del formulario */}
+      <Modal show={showForm_NewPost} onHide={handleChatClose_NewPost} size="lg">
+        <Modal.Header closeButton>
+          <img
+            src="/icons/megafono.png"
+            style={{ width: '40px', height: '40px', marginRight: '10px' }}
+          />
+          <Modal.Title style={{ paddingLeft: '230px' }}>
+            ¡Nueva Publicación!
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label htmlFor="category" style={{ marginBottom: 0, fontWeight: 'bold', flex: '0 0 120px' }}>Categoría: </label>
+              <select
+                className="form-control"
+                id="category"
+                style={{
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                  flex: 1, // hace que el select ocupe el espacio disponible
+                }}
+              >
+                <option value="noticia">Noticia</option>
+                <option value="afiche">Afiche</option>
+                <option value="consejo">Consejo</option>
+              </select>
+            </div>
+
+            <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label htmlFor="title" style={{ marginBottom: 0, fontWeight: 'bold', flex: '0 0 120px' }}>Título: </label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                placeholder="Introduce el título"
+                style={{
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                  flex: 1, // hace que el input ocupe el espacio disponible
+                }}
+              />
+            </div>
+
+            <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label htmlFor="date" style={{ marginBottom: 0, fontWeight: 'bold', flex: '0 0 120px' }}>Fecha: </label>
+              <input
+                type="date"
+                className="form-control"
+                id="date"
+                style={{
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                  flex: 1, // hace que el input ocupe el espacio disponible
+                }}
+              />
+            </div>
+
+            <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label htmlFor="district" style={{ marginBottom: 0, fontWeight: 'bold', flex: '0 0 120px' }}>Distrito: </label>
+              <select
+                className="form-control"
+                id="district"
+                style={{
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                  flex: 1, // hace que el select ocupe el espacio disponible
+                }}
+              >
+                <option value="arequipa">Arequipa</option>
+                <option value="cayma">Cayma</option>
+                <option value="cerro_colorado">Cerro Colorado</option>
+                <option value="mariano_melgar">Mariano Melgar</option>
+                <option value="miraflores">Miraflores</option>
+                <option value="paucarpata">Paucarpata</option>
+                <option value="sachaca">Sachaca</option>
+                <option value="socabaya">Socabaya</option>
+                <option value="yanahuara">Yanahuara</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="description" style={{ fontWeight: 'bold' }}>Descripción:</label>
+              <textarea
+                className="form-control"
+                id="description"
+                rows="4"
+                placeholder="Escribe una descripción"
+                style={{
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  padding: '10px',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                  width: '100%' // aseguramos que ocupe el espacio completo
+                }}
+              ></textarea>
+            </div>
+
+            <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label htmlFor="file" style={{ marginBottom: 0, fontWeight: 'bold', flex: '0 0 120px' }}>Imagen:</label>
+              <input
+                type="file"
+                className="form-control-file"
+                id="file"
+                style={{
+                  marginBottom: '10px',
+                  width: '100%' // aseguramos que ocupe el espacio completo
+                }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-primary w-100"
+              style={{
+                padding: '10px',
+                fontSize: '16px',
+                borderRadius: '4px',
+                border: 'none',
+                backgroundColor: '#007bff',
+              }}
+            >
+              Publicar
+            </button>
+          </form>
+        </Modal.Body>
+      </Modal>
+
+
+
       <div className="container my-4">
         {/* Top Navigation */}
         <div className="d-flex justify-content-between align-items-center mb-4">
@@ -452,13 +599,14 @@ export default function Inicio() {
               <option value="Yanahuara" />
               {/* Add more districts as needed */}
             </datalist>
-            <a href="/nueva-publicacion">
-              <button className="btn btn-primary ms-2">
-                <i className="fas fa-map-marker-alt"></i> Nueva Publicación
-              </button>
-            </a>
           </div>
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {/* Botón Nueva Publicación */}
+            <button className="btn btn-primary me-3" onClick={handleChatOpen_NewPost}>
+              <i className="fas fa-plus"></i> Nueva Publicación
+            </button>
+
+            {/* Botón Mis Publicaciones */}
             <button className="btn btn-outline-primary">
               <i className="fas fa-plus"></i> Mis publicaciones
             </button>
@@ -615,7 +763,7 @@ export default function Inicio() {
         </div>
       </div>
 
-     
+
 
 
 
