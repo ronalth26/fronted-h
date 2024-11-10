@@ -18,9 +18,47 @@ export default function Inicio() {
   const [showMaps, setMaps] = useState(false);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [publicaciones, setPublicaciones] = useState([]); // Inicializa publicaciones como array vacío
 
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
+
+  // Datos publicación
+  async function obtenerPublicaciones() {
+    try {
+      const response = await fetch(`${DOMAIN_BACK}?controller=publicaciones`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        // Si la respuesta HTTP no es exitosa, lanzar un error
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // Verifica si la respuesta tiene la estructura esperada
+      if (Array.isArray(data)) {
+        console.log('Publicaciones:', data); // Imprime todas las publicaciones en consola
+        // Aquí podrías manejar `data`, por ejemplo, renderizar en el DOM
+        setPublicaciones(data); // pasar los datos de data a el array de publicaciones
+      } else {
+        console.error('Error al obtener publicaciones:', data.mensaje || 'Estructura de respuesta no esperada');
+        if (typeof toast !== 'undefined') {
+          toast.error(data.mensaje || 'Error desconocido al obtener publicaciones');
+        }
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      if (typeof toast !== 'undefined') {
+        toast.error('Error al obtener publicaciones');
+      }
+    }
+  }
+
+
 
   // Función para abrir el modal del chat
   const handleChatOpen = () => setShowChat(true);
@@ -805,6 +843,10 @@ export default function Inicio() {
             <button className="btn btn-primary me-3" onClick={handleChatOpen_NewPost}>
               <i className="fas fa-plus"></i> Nueva Publicación
             </button>
+            {/* Botón para cargar publicaciones */}
+            <button className="btn btn-primary me-3" onClick={obtenerPublicaciones}>
+              <i className="fas fa-plus"></i> Cargar Publicación
+            </button>
 
             {/* Botón Mis Publicaciones */}
             <button className="btn btn-outline-primary">
@@ -821,7 +863,7 @@ export default function Inicio() {
                 {/* Horizontal buttons */}
                 <Nav variant="pills" className="d-flex justify-content-start gap-3">
                   <Nav.Item>
-                    <Nav.Link eventKey="noticias" className="btn-custom">
+                    <Nav.Link eventKey="noticias" className="btn-custom" onClick={obtenerPublicaciones} >
                       <i className="fas fa-newspaper"></i> Noticias
                     </Nav.Link>
                   </Nav.Item>
@@ -839,123 +881,167 @@ export default function Inicio() {
               </Col>
 
               <Col sm={12}>
+
+
                 <Tab.Content>
                   {/* Noticias Tab */}
                   <Tab.Pane eventKey="noticias">
-                    <div className="content-section card p-3 mb-3">
-                      <h3 className="mb-2 text-center">Título de la Noticia</h3>
+                    {publicaciones.length > 0 ? (
+                      publicaciones
+                        .filter((publicacion) => publicacion.categoria === "Noticia") // Filtrar por categoría
+                        .map((publicacion, index) => (
+                          <div key={index} className="content-section card p-3 mb-3">
 
-                      {/* Fecha y Distrito */}
-                      <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+                            {/* Título dinámico */}
+                            <h3 className="mb-2 text-center">{publicacion.titulo}</h3>
 
-                      {/* Descripción */}
-                      <p className="text-center mb-3">Breve descripción de la noticia que da una idea general del contenido.</p>
+                            {/* Fecha y distrito dinámicos */}
+                            <p className="text-muted text-center">
+                              <strong>Fecha:</strong> {publicacion.fecha} &nbsp; | &nbsp;
+                              <strong>Distrito:</strong> {publicacion.distrito}
+                            </p>
 
-                      {/* Estrellas y botón debajo de la imagen */}
-                      <div className="d-flex flex-column align-items-center">
-                        {/* Imagen */}
-                        <img src="https://via.placeholder.com/150" alt="Imagen de Noticia" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+                            {/* Descripción dinámica */}
+                            <p className="text-center mb-3">{publicacion.descripcion}</p>
 
-                        {/* Estrellas y botón de compartir al lado */}
-                        <div className="d-flex align-items-center">
-                          {/* Estrellas */}
-                          <div className="star-rating d-flex align-items-center me-3">
-                            {[...Array(5)].map((_, i) => (
-                              <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
-                            ))}
+                            <div className="d-flex flex-column align-items-center">
+                              {/* Imagen dinámica */}
+                              <img
+                                src={publicacion.imagenUrl}
+                                alt={`Imagen de ${publicacion.titulo}`}
+                                className="img-thumbnail mb-3"
+                                style={{ maxWidth: "150px" }}
+                              />
+
+                              <div className="d-flex align-items-center">
+                                <div className="star-rating d-flex align-items-center me-3">
+                                  {[...Array(5)].map((_, i) => (
+                                    <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                                  ))}
+                                </div>
+
+                                <div className="d-flex flex-column align-items-center">
+                                  <button className="btn btn-outline-primary d-flex align-items-center">
+                                    <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                                  </button>
+                                  <small>Compartir</small>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-
-                          {/* Botón de Compartir */}
-                          <div className="d-flex flex-column align-items-center">
-                            <button className="btn btn-outline-primary d-flex align-items-center">
-                              <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
-                            </button>
-                            <small>Compartir</small>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
+                        ))
+                    ) : (
+                      <p className="text-center">No hay publicaciones disponibles.</p>
+                    )}
                   </Tab.Pane>
+
+
 
                   {/* Afiches Tab */}
                   <Tab.Pane eventKey="afiches">
-                    <div className="content-section card p-3 mb-3">
-                      <h3 className="mb-2 text-center">Título de la Afiche</h3>
+                    {publicaciones.length > 0 ? (
+                      publicaciones
+                        .filter((afiche) => afiche.categoria === "Afiche") // Filtrar por categoría "afiche"
+                        .map((afiche, index) => (
+                          <div key={index} className="content-section card p-3 mb-3">
 
-                      {/* Fecha y Distrito */}
-                      <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+                            {/* Título dinámico */}
+                            <h3 className="mb-2 text-center">{afiche.titulo}</h3>
 
-                      {/* Descripción */}
-                      <p className="text-center mb-3">Breve descripción del afiche que da una idea general del contenido.</p>
+                            {/* Fecha y distrito dinámicos */}
+                            <p className="text-muted text-center">
+                              <strong>Fecha:</strong> {afiche.fecha} &nbsp; | &nbsp;
+                              <strong>Distrito:</strong> {afiche.distrito}
+                            </p>
 
-                      {/* Estrellas y botón debajo de la imagen */}
-                      <div className="d-flex flex-column align-items-center">
-                        {/* Imagen */}
-                        <img src="https://via.placeholder.com/150" alt="Imagen de Afiche" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+                            {/* Descripción dinámica */}
+                            <p className="text-center mb-3">{afiche.descripcion}</p>
 
-                        {/* Estrellas y botón de compartir al lado */}
-                        <div className="d-flex align-items-center">
-                          {/* Estrellas */}
-                          <div className="star-rating d-flex align-items-center me-3">
-                            {[...Array(5)].map((_, i) => (
-                              <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
-                            ))}
+                            <div className="d-flex flex-column align-items-center">
+                              {/* Imagen dinámica */}
+                              <img
+                                src={afiche.imagenUrl}
+                                alt={`Imagen de ${afiche.titulo}`}
+                                className="img-thumbnail mb-3"
+                                style={{ maxWidth: "150px" }}
+                              />
+
+                              <div className="d-flex align-items-center">
+                                <div className="star-rating d-flex align-items-center me-3">
+                                  {[...Array(5)].map((_, i) => (
+                                    <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                                  ))}
+                                </div>
+
+                                <div className="d-flex flex-column align-items-center">
+                                  <button className="btn btn-outline-primary d-flex align-items-center">
+                                    <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                                  </button>
+                                  <small>Compartir</small>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-
-                          {/* Botón de Compartir */}
-                          <div className="d-flex flex-column align-items-center">
-                            <button className="btn btn-outline-primary d-flex align-items-center">
-                              <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
-                            </button>
-                            <small>Compartir</small>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
+                        ))
+                    ) : (
+                      <p className="text-center">No hay afiches disponibles.</p>
+                    )}
                   </Tab.Pane>
+
+
 
                   {/* Consejos Tab */}
                   <Tab.Pane eventKey="consejo">
-                    <div className="content-section card p-3 mb-3">
-                      <h3 className="mb-2 text-center">Título de la Consejo</h3>
+                    {publicaciones.length > 0 ? (
+                      publicaciones
+                        .filter((consejo) => consejo.categoria === "Consejo") // Filtrar por categoría "consejo"
+                        .map((consejo, index) => (
+                          <div key={index} className="content-section card p-3 mb-3">
 
-                      {/* Fecha y Distrito */}
-                      <p className="text-muted text-center"><strong>Fecha:</strong> 09 Noviembre 2024 &nbsp; | &nbsp; <strong>Distrito:</strong> Arequipa</p>
+                            {/* Título dinámico */}
+                            <h3 className="mb-2 text-center">{consejo.titulo}</h3>
 
-                      {/* Descripción */}
-                      <p className="text-center mb-3">Breve descripción del consejo que da una idea general del contenido.</p>
+                            {/* Fecha y distrito dinámicos */}
+                            <p className="text-muted text-center">
+                              <strong>Fecha:</strong> {consejo.fecha} &nbsp; | &nbsp;
+                              <strong>Distrito:</strong> {consejo.distrito}
+                            </p>
 
-                      {/* Estrellas y botón debajo de la imagen */}
-                      <div className="d-flex flex-column align-items-center">
-                        {/* Imagen */}
-                        <img src="https://via.placeholder.com/150" alt="Imagen del Consejo" className="img-thumbnail mb-3" style={{ maxWidth: "150px" }} />
+                            {/* Descripción dinámica */}
+                            <p className="text-center mb-3">{consejo.descripcion}</p>
 
-                        {/* Estrellas y botón de compartir al lado */}
-                        <div className="d-flex align-items-center">
-                          {/* Estrellas */}
-                          <div className="star-rating d-flex align-items-center me-3">
-                            {[...Array(5)].map((_, i) => (
-                              <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
-                            ))}
+                            <div className="d-flex flex-column align-items-center">
+                              {/* Imagen dinámica */}
+                              <img
+                                src={consejo.imagenUrl}
+                                alt={`Imagen de ${consejo.titulo}`}
+                                className="img-thumbnail mb-3"
+                                style={{ maxWidth: "150px" }}
+                              />
+
+                              <div className="d-flex align-items-center">
+                                <div className="star-rating d-flex align-items-center me-3">
+                                  {[...Array(5)].map((_, i) => (
+                                    <span key={i} style={{ color: "#ffc107", fontSize: "1.5rem" }}>★</span>
+                                  ))}
+                                </div>
+
+                                <div className="d-flex flex-column align-items-center">
+                                  <button className="btn btn-outline-primary d-flex align-items-center">
+                                    <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
+                                  </button>
+                                  <small>Compartir</small>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-
-                          {/* Botón de Compartir */}
-                          <div className="d-flex flex-column align-items-center">
-                            <button className="btn btn-outline-primary d-flex align-items-center">
-                              <span role="img" aria-label="share" style={{ fontSize: "1.5rem" }}>📤</span>
-                            </button>
-                            <small>Compartir</small>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
+                        ))
+                    ) : (
+                      <p className="text-center">No hay consejos disponibles.</p>
+                    )}
                   </Tab.Pane>
+
+
                 </Tab.Content>
               </Col>
             </Row>
