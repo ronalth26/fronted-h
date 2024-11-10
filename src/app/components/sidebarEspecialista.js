@@ -25,9 +25,6 @@ import { useJwt } from "react-jwt";
 
 
 const Sidebar = () => {
-
-
-
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
 

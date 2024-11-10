@@ -7,16 +7,20 @@ import '../boostrap.css';
 import Sidebar from '../components/sidebar';
 import '../estilos/globales.css';
 import useToken from '../utils/auth';
-import { Nav, Tab, Row, Col } from 'react-bootstrap';
+import { Nav, Tab, Row, Col, Modal } from 'react-bootstrap';
 import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
 import { Modal, Button } from 'react-bootstrap';
 export default function Inicio() {
-
+  const [showChat, setShowChat] = useState(false);
 
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
 
+  // Función para abrir el modal del chat
+  const handleChatOpen = () => setShowChat(true);
 
+  // Función para cerrar el modal del chat
+  const handleChatClose = () => setShowChat(false);
 
   // useEffect(() => {
   //   if (isExpired || !decodedToken) {
@@ -104,18 +108,16 @@ export default function Inicio() {
   return (
     <>
       <Sidebar isOpen={isSidebarOpen} toggleDrawer={toggleDrawer} />
-
-
-
       <div className="content layout-pages" style={{ marginBottom: '4rem' }}>
 
         <div class="row">
-          <div class="col-3">1</div>
+          <div class="col-3"></div>
 
           <div class="col-6 text-center">
 
             <div class="row justify-content-center">
-              <table class="table table-bordered text-center align-middle w-75">
+            <table className="table text-center align-middle w-75" style={{ color: "red", width: "10px" }}>
+
                 <tbody>
                   <tr>
                     {/* <!-- Columna de servicio con ícono y nombre --> */}
@@ -301,11 +303,9 @@ export default function Inicio() {
                 </tbody>
               </table>
             </div>
-
-
-
           </div>
 
+<<<<<<< HEAD
 
 
           < div class="col-3">
@@ -313,10 +313,123 @@ export default function Inicio() {
             <img src='/icons/1.png' style={{ width: '200px' }}></img>
           </div>
         </div>
+=======
+          < div class="col-3">
+
+          </div>
+        </div>
+
+        {/* Botón para abrir el chat */}
+        <div
+          className="chatbot-button"
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            marginBottom: '40px',
+            right: '20px',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            padding: '15px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          }}
+          onClick={handleChatOpen}
+        >
+          <img
+            src="/icons/3.png"
+            alt="Chat Icon"
+            style={{ width: '50px', height: '50px' }}
+          />
+        </div>
+        {/* cerrar boton para modal */}
+
+
+        {/* Modal del Chat */}
+        <Modal show={showChat} onHide={handleChatClose} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <img
+                src="/icons/a1.png"
+                alt="Chatbot"
+                style={{ width: '40px', height: '40px', marginRight: '10px' }}
+              />
+              Chatbot
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div
+              className="chat-box"
+              style={{
+                minHeight: '300px',
+                maxHeight: '400px',
+                overflowY: 'auto',
+                padding: '15px',
+                backgroundColor: '#f1f1f1',
+                borderRadius: '8px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+              }}
+            >
+              <div className="chat-message bot-message">
+                <p style={{ backgroundColor: '#007bff', color: 'white', padding: '10px', borderRadius: '10px' }}>
+                  ¡Hola! ¿En qué puedo ayudarte hoy?
+                </p>
+              </div>
+              <div className="chat-message user-message">
+                <p
+                  style={{
+                    backgroundColor: '#e2e2e2',
+                    padding: '10px',
+                    borderRadius: '10px',
+                  }}
+                >
+                  ¿Cuáles son los servicios que ofreces?
+                </p>
+              </div>
+              <div className="chat-message bot-message">
+                <p style={{ backgroundColor: '#007bff', color: 'white', padding: '10px', borderRadius: '10px' }}>
+                  Ofrecemos bomberos, policía, ambulancia, y más. ¿Te gustaría más información sobre algún servicio?
+                </p>
+              </div>
+            </div>
+            {/* fin modal */}
+
+            {/* Campo de texto para la respuesta del usuario */}
+            <div className="chat-input" style={{ marginTop: '15px' }}>
+              <input
+                type="text"
+                placeholder="Escribe tu mensaje..."
+                className="form-control"
+                style={{
+                  borderRadius: '20px',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                }}
+              />
+              <button
+                className="btn btn-primary mt-2"
+                style={{
+                  borderRadius: '20px',
+                  width: '100%',
+                  padding: '10px',
+                  fontSize: '16px',
+                }}
+              >
+                Enviar
+              </button>
+            </div>
+          </Modal.Body>
+
+        </Modal>
+>>>>>>> c76639d7f511edbb605d144fbd33cb1fbc794a4b
 
 
         <div className="container my-4">
           {/* Top Navigation */}
+<<<<<<< HEAD
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div className="d-flex align-items-center">
               <label className="me-2">Distrito:</label>
@@ -355,6 +468,8 @@ export default function Inicio() {
               </button>
             </div>
           </div>
+=======
+>>>>>>> c76639d7f511edbb605d144fbd33cb1fbc794a4b
 
           {/* Navigation Tabs */}
           <div className="container mt-5">
@@ -520,7 +635,9 @@ export default function Inicio() {
         ))}
 
 
-      </div>
+      </div >
+
+
     </>
   );
 

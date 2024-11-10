@@ -1,243 +1,216 @@
-'use client';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useEffect, useState } from 'react';
-import { useJwt } from "react-jwt";
-import { toast, ToastContainer } from 'react-toastify';
+"use client";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DOMAIN_BACK, DOMAIN_FRONT } from '../../../env';
-import Sidebar from '../components/sidebar';
-import SidebarEpecialista from '../components/sidebarEspecialista';
-import '../estilos/globales.css';
-import useToken from '../utils/auth';
-import './activacion-de-alarma-module.css';
+import Sidebar from "../components/sidebar";
+import "../estilos/globales.css";
+import "./activacion-de-alarma-module.css";
 
-const RegisterComplaint = () => {
+const ActivacionAlarma = () => {
+  const [users, setUsers] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+  const [groupUsers, setGroupUsers] = useState([]);
+  const [alarmReason, setAlarmReason] = useState("");
+  const [isGroupAlarmActive, setIsGroupAlarmActive] = useState(false);
+  const [alarmReasons, setAlarmReasons] = useState([]);
 
-  const { Token } = useToken();
-  const { decodedToken, isExpired } = useJwt(Token);
+  // Fetch users based on district (mock data)
+  const districtUsers = {
+    Cercado: [
+      { id: 1, name: "Juan Pérez" },
+      { id: 2, name: "Carlos López" },
+      { id: 3, name: "Ana Sánchez" },
+      { id: 4, name: "Luis García" },
+      { id: 5, name: "María Rodríguez" },
+    ],
+    Yanahuara: [
+      { id: 6, name: "Pedro Martínez" },
+      { id: 7, name: "Laura Ruiz" },
+      { id: 8, name: "Ricardo Torres" },
+      { id: 9, name: "Sofía Ramírez" },
+      { id: 10, name: "Fernando Díaz" },
+    ],
+    Cayma: [
+      { id: 11, name: "Marta Herrera" },
+      { id: 12, name: "Raúl Fernández" },
+      { id: 13, name: "Pablo Castro" },
+      { id: 14, name: "Elena Pérez" },
+      { id: 15, name: "Carlos Jiménez" },
+    ],
+    Arequipa: [
+      { id: 16, name: "Verónica Gómez" },
+      { id: 17, name: "Javier Morales" },
+      { id: 18, name: "Adriana Méndez" },
+      { id: 19, name: "Juan Ramírez" },
+      { id: 20, name: "Eva Martínez" },
+    ],
+    "José Luis Bustamante": [
+      { id: 21, name: "Oscar Díaz" },
+      { id: 22, name: "Ricardo Pérez" },
+      { id: 23, name: "Claudia Silva" },
+      { id: 24, name: "Miguel Rodríguez" },
+      { id: 25, name: "Patricia Torres" },
+    ],
+  };
 
-  // useEffect(() => {
-  //   if (isExpired || !decodedToken) {
-  //     window.location.href = `${DOMAIN_FRONT}/login`;
-  //   }
-  // }, [isExpired, decodedToken]);
-
-  const [formData, setFormData] = useState({
-    solicitud: '',
-    motivo: '',
-    descripcion: '',
-    imagen: null,
-  });
-  const [solicitudes, setSolicitudes] = useState([]);
-
-    
-  const [id_usuario, setIdUsuario] = useState(0);
-  const [especialista, setEspecialista] = useState(0);
-
+  // Update users when district changes
   useEffect(() => {
-    if (decodedToken) {
-      setIdUsuario(decodedToken.data.id);
-      setEspecialista(decodedToken.data.especialista);
+    if (selectedDistrict) {
+      setUsers(districtUsers[selectedDistrict] || []);
     }
-  }, [decodedToken]);
- 
+  }, [selectedDistrict]);
 
-
-  useEffect(() => {
-    if(id_usuario != 0){
-      fetch(`${DOMAIN_BACK}?controller=solicitudes&action=traer_solicitudes_por_cliente&idCliente=${id_usuario}`)
-        .then(response => response.json())
-        .then(data => setSolicitudes(data))
-        .catch(error => console.error('Error al obtener solicitudes:', error));
-    }
-  }, [id_usuario]);
-
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: files ? files[0] : value,
-    }));
+  const handleDistrictChange = (e) => {
+    setSelectedDistrict(e.target.value);
   };
 
-
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    window.location.href = DOMAIN_FRONT + 'plataforma';
-  };
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('idCliente', id_usuario);
-    formDataToSend.append('idSolicitud', formData.solicitud);
-    formDataToSend.append('motivo', formData.motivo);
-    formDataToSend.append('descripcion', formData.descripcion);
-    formDataToSend.append('imagen', formData.imagen);
-
-
-    try {
-      const response = await fetch(`${DOMAIN_BACK}?controller=quejas&action=crear_queja`, {
-        method: 'POST',
-        body: formDataToSend,
-        headers: {
-          'Accept': 'application/json',
-        },
-        // body: JSON.stringify({
-        //   idCliente: id_usuario,
-        //   idSolicitud: formData.solicitud,
-        //   motivo: formData.motivo,
-        //   descripcion: formData.descripcion,
-        //   imagen: formData.imagen,
-        // })
-      });
-
-      const data = await response.json();
-
-      console.log(response);
-      console.log(data);
-      if (data.estado === 1) {
-        toast.success(data.mensaje);
-
-        handleClickOpen();
-        // setTimeout(() => {
-        //   window.location.href = DOMAIN_FRONT + 'plataforma';
-        // }, 2000);
-      } else {
-        toast.error(data.mensaje);
-      }
-    } catch (error) {
-      console.error('Error al registrar la queja:', error);
-      toast.error('Error al registrar la queja');
+  const handleAddUser = (user) => {
+    if (!groupUsers.some((u) => u.id === user.id)) {
+      setGroupUsers([...groupUsers, { ...user, alarmActive: false }]);
     }
   };
 
+  const toggleAlarm = (user) => {
+    const updatedUsers = groupUsers.map((u) =>
+      u.id === user.id ? { ...u, alarmActive: !u.alarmActive } : u
+    );
+    setGroupUsers(updatedUsers);
+    if (!user.alarmActive && alarmReason.trim()) {
+      setAlarmReasons([
+        ...alarmReasons,
+        { user: user.name, reason: alarmReason },
+      ]);
+    }
+  };
 
+  const handleGroupAlarmToggle = () => {
+    setShowDialog(true);
+  };
+
+  const confirmAlarmActivation = () => {
+    if (!alarmReason.trim()) {
+      alert("Por favor ingrese un motivo para activar la alarma");
+      return;
+    }
+    setIsGroupAlarmActive(!isGroupAlarmActive);
+    setShowDialog(false);
+  };
 
   return (
-    <>
+    <div className="container-fluid activacion-alarma">
+      <Sidebar />
       <ToastContainer />
-       {especialista == '0' ? (
-         <Sidebar />
-       ) : (
-        <SidebarEpecialista/>
-      )}
-
-
-      <section className="ftco-section" style={{ marginTop: '5rem' }}>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-6 text-center mb-5">
-              <h2 className="heading-section">Registro de Quejas de Mario</h2>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-md-7 col-lg-5">
-              <div className="wrap">
-                <div className="login-wrap p-4 p-md-5">
-                  <div className="icon d-flex align-items-center justify-content-center">
-                    <span className="fa fa-user-o"></span>
-                  </div>
-                  <h3 className="text-center mb-4">¡Bienvenido!</h3>
-                  <form onSubmit={handleSubmit} className="register-complaint-form">
-                    <div className="form-group">
-                      <label htmlFor="solicitud">Seleccione su solicitud:</label>
-                      <select
-                        name="solicitud"
-                        className="form-control"
-                        value={formData.solicitud}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Nombre de Solicitud</option>
-                        {solicitudes.map((solicitud) => (
-                          <option key={solicitud.idSolicitud} value={solicitud.idSolicitud}>
-                            {solicitud.descripcion}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="motivo">Motivo de queja:</label>
-                      <select
-                        name="motivo"
-                        className="form-control"
-                        value={formData.motivo}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Seleccione motivo</option>
-                        <option value="Aplicativo">Aplicativo</option>
-                        <option value="Especialista">Especialista</option>
-                        <option value="Servicio">Servicio</option>
-                        <option value="Otro">Otro</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="descripcion">Descripción de queja:</label>
-                      <textarea
-                        name="descripcion"
-                        className="form-control"
-                        rows="3"
-                        value={formData.descripcion}
-                        onChange={handleChange}
-                        required
-                      ></textarea>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="imagen">Cargar Imagen:</label>
-                      <input
-                        type="file"
-                        name="imagen"
-                        className="form-control-file"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <button type="submit" className="btn btn-primary form-control">Registrar Queja</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="header d-flex justify-content-between align-items-center">
+        <h1>Grupo de Vecinos</h1>
+        <Button
+          variant="contained"
+          color={isGroupAlarmActive ? "danger" : "success"}
+          onClick={handleGroupAlarmToggle}
+          style={{ backgroundColor: isGroupAlarmActive ? "red" : "green" }}
+        >
+          {isGroupAlarmActive ? "Alarma Activada" : "Alarma Desactivada"}
+        </Button>
+      </div>
+      <div className="search-section mb-4">
+        <div className="d-flex align-items-center">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar Usuario por nombre"
+          />
+          <FaSearch
+            className="search-icon"
+            style={{ position: "absolute", right: "20px", top: "10px" }}
+          />
+          <select
+            className="form-control"
+            onChange={handleDistrictChange}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value="">Seleccione Distrito</option>
+            {Object.keys(districtUsers).map((district) => (
+              <option key={district} value={district}>
+                {district}
+              </option>
+            ))}
+          </select>
         </div>
-      </section>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Su queja de registró corretamente , pronto le enviaremos la respuesta a su correo este sera en un plazo de 2-3 días hábiles"}
+        <Button
+          onClick={() => handleAddUser(users[0])}
+          className="mt-2"
+          style={{ backgroundColor: "rgba(255,193,7,1)", color: "black" }}
+        >
+          Agregar
+        </Button>
+      </div>
+
+      <div className="users-list mb-4">
+        {groupUsers.map((user, index) => (
+          <div
+            key={index}
+            className="user-item d-flex justify-content-between align-items-center mb-2"
+          >
+            <span>{user.name}</span>
+            <div>
+              <Button
+                variant="outline-secondary"
+                onClick={() => toggleAlarm(user)}
+                style={{
+                  backgroundColor: user.alarmActive ? "red" : "green",
+                  color: "white",
+                }}
+              >
+                {user.alarmActive ? "Desactivar" : "Activar"}
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={() =>
+                  setGroupUsers(groupUsers.filter((u) => u.id !== user.id))
+                }
+                className="ml-2"
+              >
+                🗑️
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="alarm-reasons mb-4">
+        <h2>Motivo de Alarma</h2>
+        {alarmReasons.map((reason, index) => (
+          <p key={index}>
+            <strong>{reason.user}:</strong> {reason.reason}
+          </p>
+        ))}
+      </div>
+
+      <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
+        <DialogTitle>
+          ¿Está seguro que desea activar la alarma de emergencia?
         </DialogTitle>
         <DialogContent>
-          <center>  
-            <img src='/terminada.png' width='60%'></img>
-          </center>
+          <textarea
+            placeholder="Ingrese el motivo de la alarma"
+            onChange={(e) => setAlarmReason(e.target.value)}
+            className="form-control"
+          />
         </DialogContent>
         <DialogActions>
-          <Button className='btn btn-primary' onClick={handleClose} autoFocus>
-            Cerrar
-          </Button>
+          <Button onClick={() => setShowDialog(false)}>No, Ignorar</Button>
+          <Button onClick={confirmAlarmActivation}>Sí, Activar</Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   );
 };
 
-export default RegisterComplaint;
+export default ActivacionAlarma;

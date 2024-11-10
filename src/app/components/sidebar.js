@@ -28,12 +28,12 @@ const Sidebar = () => {
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
 
-  useEffect(() => {
-    if (Token == null) {
-      console.log('Token has expired, redirecting to login page.');
-      window.location.href = `${DOMAIN_FRONT}`;
-    }
-  }, [isExpired]);
+  // useEffect(() => {
+  //   if (Token == null) {
+  //     console.log('Token has expired, redirecting to login page.');
+  //     window.location.href = `${DOMAIN_FRONT}`;
+  //   }
+  // }, [isExpired]);
 
   useEffect(() => {
     if (Token == null || isExpired) {
@@ -99,6 +99,7 @@ const Sidebar = () => {
 
   const list = () => (
     <Box sx={{ width: 300 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+     
       <div className="row align-items-center text-center mt-3">
         <div className="col-md-5">
           <img src="/profile.png" alt="logo" className="img-fluid" style={{ maxWidth: '50%', height: 'auto' }} />
