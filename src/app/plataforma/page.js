@@ -226,7 +226,7 @@ export default function Inicio() {
                     {/* <!-- Columna de botón de editar con ícono --> */}
                     <td>
                       <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                        <img src="/icons/edit.png" width="20" alt="Editar" onClick={handleEdit}></img>
                       </button>
                     </td>
 
@@ -272,7 +272,7 @@ export default function Inicio() {
                     {/* <!-- Columna de botón de editar con ícono --> */}
                     <td>
                       <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/edit.png" width="20" alt="Editar"></img>
+                        <img src="/icons/edit.png" width="20" alt="Editar" onClick={handleEdit}></img>
                       </button>
                     </td>
 
@@ -316,7 +316,7 @@ export default function Inicio() {
 
                     {/* <!-- Columna de botón de editar con ícono --> */}
                     <td>
-                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
+                      <button class="btn btn-outline-secondary btn-sm" onClick={handleEdit} data-bs-toggle="tooltip" title="Editar" style={{ width: '50px', height: '40px' }}>
                         <img src="/icons/edit.png" width="20" alt="Editar"></img>
                       </button>
                     </td>
@@ -756,18 +756,18 @@ export default function Inicio() {
 
       {/* Modal del formulario de maps*/}
       <Modal show={showMaps} onHide={handleMapsClose} size="lg">
-      <Modal.Header closeButton>
-        <img
-          src="/icons/maps.png"
-          style={{ width: "40px", height: "40px", marginRight: "10px" }}
-          alt="Map Icon"
-        />
-        <Modal.Title>Ubicación más cercana</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div id="map" style={{ height: "500px", width: "100%" }}></div>
-      </Modal.Body>
-    </Modal>
+        <Modal.Header closeButton>
+          <img
+            src="/icons/maps.png"
+            style={{ width: "40px", height: "40px", marginRight: "10px" }}
+            alt="Map Icon"
+          />
+          <Modal.Title>Ubicación más cercana</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div id="map" style={{ height: "500px", width: "100%" }}></div>
+        </Modal.Body>
+      </Modal>
 
       <div className="container my-4">
         {/* Top Navigation */}
