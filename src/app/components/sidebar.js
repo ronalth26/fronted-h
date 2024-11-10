@@ -1,36 +1,26 @@
 // Sidebar.js
-"use client";
-import BuildIcon from "@mui/icons-material/Build";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import PersonIcon from "@mui/icons-material/Person";
-import Person4Icon from "@mui/icons-material/Person4";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog"; // Asegúrate de importar el componente Dialog
-import DialogActions from "@mui/material/DialogActions"; // También importa DialogActions
-import DialogContent from "@mui/material/DialogContent"; // También importa DialogContent
-import DialogTitle from "@mui/material/DialogTitle"; // También importa DialogTitle
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import {
-  FaBars,
-  FaBriefcase,
-  FaEnvelope,
-  FaHome,
-  FaInfoCircle,
-  FaPaw,
-  FaQuestionCircle,
-  FaTimes,
-} from "react-icons/fa";
+'use client';
+import BuildIcon from '@mui/icons-material/Build';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import PersonIcon from '@mui/icons-material/Person';
+import Person4Icon from '@mui/icons-material/Person4';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+
+import {  Popover, Typography } from '@mui/material';
+
+
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { FaBars, FaBriefcase, FaChevronDown, FaEnvelope, FaHome, FaInfoCircle, FaPaw, FaQuestionCircle, FaTimes } from 'react-icons/fa';
 import { useJwt } from "react-jwt";
 import { DOMAIN_BACK, DOMAIN_FRONT } from "../../../env";
 import "../estilos/globales.css";
@@ -39,13 +29,34 @@ import "./listaSidebar.css";
 import styles from "./sidebar.module.css";
 
 const Sidebar = () => {
+
+
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [isAlarmActive, setIsAlarmActive] = useState(false);
-  const [motivoAlarma, setMotivoAlarma] = useState("");
-  const [alarmReason, setAlarmReason] = useState("");
 
+  const [notifications, setNotifications] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openPopover, setOpenPopover] = useState(false);
+
+  // Simulación de las notificaciones
+  useEffect(() => {
+    setNotifications([
+      { id: 1, title: 'Nueva Alerta', message: 'Alerta de seguridad en tu área.', link: '/notificacion/1' },
+      { id: 2, title: 'Actualización de Solicitud', message: 'Tu solicitud ha sido actualizada.', link: '/notificacion/2' },
+      { id: 3, title: 'Nuevo Mensaje', message: 'Tienes un nuevo mensaje de un cliente.', link: '/notificacion/3' },
+      { id: 4, title: 'Revisión de Documento', message: 'Tu documento ha sido revisado y aprobado.', link: '/notificacion/4' },
+      { id: 5, title: 'Nuevo Registro', message: 'Se ha registrado una nueva solicitud de servicio.', link: '/notificacion/5' },
+    ]);
+  }, []);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpenPopover(true);
+  };
+
+  const handlePopoverClose = () => {
+    setOpenPopover(false);
+  };
   // useEffect(() => {
   //   if (Token == null) {
   //     console.log('Token has expired, redirecting to login page.');
@@ -60,14 +71,16 @@ const Sidebar = () => {
     }
   }, [Token, isExpired]);
 
+
   useEffect(() => {
     // console.log('Token expiration status:', isExpired);
   }, [isExpired]);
 
   const [id_usuario, setIdUsuario] = useState(0);
   const [especialista, setEspecialista] = useState(0);
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+
 
   useEffect(() => {
     if (decodedToken) {
@@ -163,12 +176,8 @@ const Sidebar = () => {
   );
 
   const list = () => (
-    <Box
-      sx={{ width: 300 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <Box sx={{ width: 300 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+     
       <div className="row align-items-center text-center mt-3">
         <div className="col-md-5">
           <img
@@ -328,66 +337,68 @@ const Sidebar = () => {
           className="navbar-nav ms-auto"
           style={{ display: "flex", alignItems: "center", gap: "15px" }}
         >
-          {/* Botón de alerta */}
-          <Button
-            className="btn btn-warning mx-2"
-            style={{ display: "flex", alignItems: "center", width: "auto" }}
-          >
-            <img
-              src="/icons/noti.png"
-              alt="Alerta"
-              style={{ width: "20px", height: "20px", color: "white" }}
-            />
-          </Button>
+         
           {/* Botón de notificaciones */}
-          <Button
-            className="btn btn-info mx-2"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              background: "rgb(164,203,180)",
-              border: "0px",
-            }}
-            onClick={handleAlertClick}
-          >
-            <img
-              src="/icons/alert.png"
-              alt="Alerta"
-              style={{ width: "20px", height: "21px" }}
-            />
+          <Button className="btn btn-info mx-2" style={{ display: 'flex', alignItems: 'center', background: 'rgb(164,203,180)',border:'0px' }}>
+            <img src="/icons/alert.png" alt="Alerta" style={{ width: '20px', height: '21px' }} />
           </Button>
 
-          {/* Modal de confirmación de alarma */}
-          <Dialog open={modalOpen} onClose={handleCloseModal}>
-            <DialogTitle>
-              ¿Está seguro que desea activar la alarma de emergencia? 
-            </DialogTitle>
-            <p><center><alignItems>En ese caso, escribe un motivo por el cual desea activar para informar a los demás integrantes del grupo.</alignItems></center></p>
-            <DialogContent>
-              <textarea
-                value={alarmReason} // Vinculamos el valor del textarea con el estado
-                onChange={handleAlarmReasonChange} // Actualizamos el estado cada vez que el usuario escribe
-                placeholder="Escriba el motivo para activar la alarma"
-                className="form-control"
-                rows={4} // Puedes ajustar este valor para que el cuadro sea más grande
-                style={{ resize: "none" }} // Esto evitará que el cuadro de texto se redimensione
-              ></textarea>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseModal} color="secondary">
-                No, Ignorar
-              </Button>
-              <Button onClick={handleConfirmAlarm} color="primary">
-                Sí, Activar
-              </Button>
-            </DialogActions>
-          </Dialog>
+           {/* Botón de alerta */}
+           <Button className="btn btn-warning mx-2"  onClick={handlePopoverOpen} style={{ display: 'flex', alignItems: 'center', width: 'auto' }}>
+            <img src="/icons/noti.png" alt="Alerta" style={{ width: '20px', height: '20px', color: 'white' }} />
+          </Button>
           {/* Botón del usuario con icono y nombre */}
           {/* <div className="d-flex align-items-center">
             <img src="/path/to/user-icon.png" alt="Usuario" className="rounded-circle" style={{ width: '30px', marginRight: '8px' }} />
             <span style={{ color: 'white', fontSize: '1em' }}>Usuario</span>
           </div> */}
         </div>
+    
+      <Popover
+        open={openPopover}
+        anchorEl={anchorEl}
+        onClose={handlePopoverClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Box sx={{ padding: 2, minWidth: 300 }}>
+          <Typography variant="h6" gutterBottom>
+            Notificaciones
+          </Typography>
+          {notifications.length === 0 ? (
+            <Typography variant="body2">No hay nuevas notificaciones.</Typography>
+          ) : (
+            <div>
+              {notifications.map((notification) => (
+                <Link key={notification.id} href={notification.link} passHref>
+                  <Box
+                    sx={{
+                      padding: 1,
+                      marginBottom: 1,
+                      borderRadius: 1,
+                      boxShadow: 1,
+                      '&:hover': { backgroundColor: '#f1f1f1' },
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Typography variant="subtitle1">{notification.title}</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {notification.message}
+                    </Typography>
+                  </Box>
+                </Link>
+              ))}
+            </div>
+          )}
+        </Box>
+      </Popover>
+
       </nav>
       <footer className={styles.footer}>
         <a>LA SEGURIDAD CIUDADANA ES TAREA DE TODOS NO DE UNA SOLA PERSONA</a>
