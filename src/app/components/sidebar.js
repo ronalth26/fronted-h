@@ -25,9 +25,8 @@ import {
   FaEnvelope,
   FaHome,
   FaInfoCircle,
-  FaPaw,
   FaQuestionCircle,
-  FaTimes,
+  FaTimes
 } from "react-icons/fa";
 import { useJwt } from "react-jwt";
 import { DOMAIN_BACK, DOMAIN_FRONT } from "../../../env";
@@ -36,7 +35,6 @@ import useToken from "../utils/auth";
 import AlarmDialog from "./AlarmDialog";
 import "./listaSidebar.css";
 import styles from "./sidebar.module.css";
-
 
 const Sidebar = () => {
   const { Token } = useToken();
@@ -254,15 +252,15 @@ const Sidebar = () => {
             <ListItemIcon>
               <FaHome />
             </ListItemIcon>
-            <ListItemText primary="Mis servicios" />
+            <ListItemText primary="Home" />
           </ListItem>
         </Link>
-        <Link href="/registro-de-solicitudes">
+        <Link href="/plataforma">
           <ListItem className="item-list">
             <ListItemIcon>
               <FaInfoCircle />
             </ListItemIcon>
-            <ListItemText primary="Registro de Solicitudes" />
+            <ListItemText primary="Publicaciones" />
           </ListItem>
         </Link>
         <Link href="/registro-quejas">
@@ -270,15 +268,15 @@ const Sidebar = () => {
             <ListItemIcon>
               <FaBriefcase />
             </ListItemIcon>
-            <ListItemText primary="Registro Quejas" />
+            <ListItemText primary="Chat" />
           </ListItem>
         </Link>
-        <Link href="/visualizacion-solicitudes">
+        <Link href="/activacion-de-alarma">
           <ListItem className="item-list">
             <ListItemIcon>
               <FaQuestionCircle />
             </ListItemIcon>
-            <ListItemText primary="Historial" />
+            <ListItemText primary="Activación de Alerta" />
           </ListItem>
         </Link>
         <Link href="contacto">
@@ -286,7 +284,7 @@ const Sidebar = () => {
             <ListItemIcon>
               <FaEnvelope />
             </ListItemIcon>
-            <ListItemText primary="Contacto" />
+            <ListItemText primary="Geolocalización" />
           </ListItem>
         </Link>
       </List>
@@ -309,18 +307,18 @@ const Sidebar = () => {
           </ListItem>
         </Link>
 
-        <Link href="/activacion-de-alarma">
-          <ListItem
-            className="item-list"
-            style={{ backgroundColor: "#f9f6f2", borderRadius: "8px" }}
-          >
-            <ListItemIcon>
-              <FaPaw style={{ color: "#d97706", fontSize: "24px" }} />{" "}
+        {/* <Link href="/activacion-de-alarma"> */}
+          {/* <ListItem */}
+            {/* className="item-list" */}
+            {/* style={{ backgroundColor: "#f9f6f2", borderRadius: "8px" }} */}
+          {/* > */}
+            {/* <ListItemIcon> */}
+              {/* <FaPaw style={{ color: "#d97706", fontSize: "24px" }} />{" "} */}
               {/* Ícono de huella de perrito en color personalizado */}
-            </ListItemIcon>
-            <ListItemText primary="Slinky el perro" />
-          </ListItem>
-        </Link>
+            {/* </ListItemIcon> */}
+            {/* <ListItemText primary="Slinky el perro" /> */}
+          {/* </ListItem> */}
+        {/* </Link> */}
       </List>
     </Box>
   );
