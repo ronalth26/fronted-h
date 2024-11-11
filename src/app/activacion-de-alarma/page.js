@@ -99,9 +99,10 @@ const ActivacionAlarma = () => {
     alarmActive ? "rgb(232, 92, 92, 1)" : "rgb(164,203,180)";
 
   return (
+    
     <div
       className="container-fluid activacion-alarma"
-      style={{ marginTop: "60px" }}
+      style={{ marginTop: "70px" }}
     >
       <Sidebar />
       <ToastContainer />

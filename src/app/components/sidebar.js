@@ -308,16 +308,16 @@ const Sidebar = () => {
         </Link>
 
         {/* <Link href="/activacion-de-alarma"> */}
-          {/* <ListItem */}
-            {/* className="item-list" */}
-            {/* style={{ backgroundColor: "#f9f6f2", borderRadius: "8px" }} */}
-          {/* > */}
-            {/* <ListItemIcon> */}
-              {/* <FaPaw style={{ color: "#d97706", fontSize: "24px" }} />{" "} */}
-              {/* Ícono de huella de perrito en color personalizado */}
-            {/* </ListItemIcon> */}
-            {/* <ListItemText primary="Slinky el perro" /> */}
-          {/* </ListItem> */}
+        {/* <ListItem */}
+        {/* className="item-list" */}
+        {/* style={{ backgroundColor: "#f9f6f2", borderRadius: "8px" }} */}
+        {/* > */}
+        {/* <ListItemIcon> */}
+        {/* <FaPaw style={{ color: "#d97706", fontSize: "24px" }} />{" "} */}
+        {/* Ícono de huella de perrito en color personalizado */}
+        {/* </ListItemIcon> */}
+        {/* <ListItemText primary="Slinky el perro" /> */}
+        {/* </ListItem> */}
         {/* </Link> */}
       </List>
     </Box>
@@ -361,7 +361,7 @@ const Sidebar = () => {
       </Drawer>
       <nav
         className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`}
-        style={{ marginBottom: "4em", padding: "0 1em" }}
+        style={{ marginBottom: "4em", paddingLeft: "1em" }}
       >
         <ul
           className="navbar-nav me-auto"
@@ -370,7 +370,7 @@ const Sidebar = () => {
           <li className="nav-item">
             <Button
               style={{ fontSize: "25px", color: "white", marginLeft: "-20px" }}
-              onClick={toggleDrawer(true)}s
+              onClick={toggleDrawer(true)} s
               className={`${styles.toggleButton} btn btn-link`}
             >
               {isOpen ? <FaTimes /> : <FaBars />}
@@ -410,7 +410,7 @@ const Sidebar = () => {
           <Button
             className="btn btn-warning mx-2"
             onClick={handlePopoverOpen}
-            style={{ display: "flex", alignItems: "center", width: "auto" }}
+            style={{ display: "flex", alignItems: "center", width: "auto" ,backgroundColor: "rgba(252,192,68,255)"}}
           >
             <img
               src="/icons/noti.png"
@@ -474,50 +474,50 @@ const Sidebar = () => {
           </Box>
         </Popover>
 
-      <Popover
-        open={openPopover}
-        anchorEl={anchorEl}
-        onClose={handlePopoverClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Box sx={{ padding: 2, minWidth: 300 }}>
-          <Typography variant="h6" gutterBottom>
-            Notificaciones
-          </Typography>
-          {notifications.length === 0 ? (
-            <Typography variant="body2">No hay nuevas notificaciones.</Typography>
-          ) : (
-            <div>
-              {notifications.map((notification) => (
-                <Link key={notification.id} href={notification.link} passHref>
-                  <Box
-                    sx={{
-                      padding: 1,
-                      marginBottom: 1,
-                      borderRadius: 1,
-                      boxShadow: 1,
-                      '&:hover': { backgroundColor: '#f1f1f1' },
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <Typography variant="subtitle1">{notification.title}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {notification.message}
-                    </Typography>
-                  </Box>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Box>
-      </Popover>
+        <Popover
+          open={openPopover}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Box sx={{ padding: 2, minWidth: 300 }}>
+            <Typography variant="h6" gutterBottom>
+              Notificaciones
+            </Typography>
+            {notifications.length === 0 ? (
+              <Typography variant="body2">No hay nuevas notificaciones.</Typography>
+            ) : (
+              <div>
+                {notifications.map((notification) => (
+                  <Link key={notification.id} href={notification.link} passHref>
+                    <Box
+                      sx={{
+                        padding: 1,
+                        marginBottom: 1,
+                        borderRadius: 1,
+                        boxShadow: 1,
+                        '&:hover': { backgroundColor: '#f1f1f1' },
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Typography variant="subtitle1">{notification.title}</Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {notification.message}
+                      </Typography>
+                    </Box>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Box>
+        </Popover>
 
       </nav>
       <footer className={styles.footer}>
