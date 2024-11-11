@@ -1,0 +1,80 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  .chat-box {
+    padding: 20px;
+  }
+  
+  .messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+  }
+  
+  .message strong {
+    font-weight: bold;
+  }
+  
+  .message small {
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .input-container input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .input-container button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .input-container button:hover {
+    background-color: #0056b3;
+  }
+
+
+/* Estilo para el contenedor de usuarios */
+.user-list {
+    list-style-type: none; /* Elimina los puntos de lista */
+    padding: 0;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  }
+  
+  /* Estilo de cada usuario */
+  .user {
+    display: flex; /* Usa flexbox para alinear los elementos en fila */
+    align-items: center; /* Centra verticalmente la bolita con el texto */
+    margin-bottom: 10px; /* Espacio entre cada usuario */
+  }
+  
+  /* Estilo para la bolita */
+  .status {
+    width: 12px; /* Tamaño de la bolita */
+    height: 12px; /* Tamaño de la bolita */
+    border-radius: 50%; /* Forma circular */
+    background-color: #ccc; /* Color por defecto si no está online u offline */
+    margin-right: 10px; /* Espacio entre la bolita y el nombre */
+  }

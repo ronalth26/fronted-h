@@ -683,9 +683,10 @@ export default function Inicio() {
       <Modal show={showEdit} onHide={handleEditClose} size="lg">
         <Modal.Header closeButton>
           <img
-            src="/icons/edit.png"
+            src="/publiciones/imagen1.png"
             style={{ width: '40px', height: '40px', marginRight: '10px' }}
           />
+          
           <Modal.Title style={{ paddingLeft: '190px' }}>
             Editar Contactos de Emergencia
           </Modal.Title>

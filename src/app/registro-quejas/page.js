@@ -1,242 +1,193 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { DOMAIN_FRONT,DOMAIN_BACK } from '../../../env';
 import Sidebar from '../components/sidebar';
-import SidebarEpecialista from '../components/sidebarEspecialista';
+import SidebarEspecialista from '../components/sidebarEspecialista';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import '../estilos/globales.css';
-import useToken  from '../utils/auth';
-import { useJwt } from "react-jwt";
 
+const ChatApp = () => {
+  // Estado para manejar el chat
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  const [image, setImage] = useState(null);
+  const [open, setOpen] = useState(false);
 
-const RegisterComplaint = () => {
-
-  const { Token } = useToken();
-  const { decodedToken, isExpired } = useJwt(Token);
-
-  // useEffect(() => {
-  //   if (isExpired || !decodedToken) {
-  //     window.location.href = `${DOMAIN_FRONT}/login`;
-  //   }
-  // }, [isExpired, decodedToken]);
-
-  const [formData, setFormData] = useState({
-    solicitud: '',
-    motivo: '',
-    descripcion: '',
-    imagen: null,
-  });
-  const [solicitudes, setSolicitudes] = useState([]);
-
-    
-  const [id_usuario, setIdUsuario] = useState(0);
-  const [especialista, setEspecialista] = useState(0);
+  // Referencia al contenedor de mensajes
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    if (decodedToken) {
-      setIdUsuario(decodedToken.data.id);
-      setEspecialista(decodedToken.data.especialista);
+    const storedMessages = JSON.parse(localStorage.getItem('messages'));
+    if (storedMessages) {
+      setMessages(storedMessages);
     }
-  }, [decodedToken]);
- 
-
+  }, []);
 
   useEffect(() => {
-    if(id_usuario != 0){
-      fetch(`${DOMAIN_BACK}?controller=solicitudes&action=traer_solicitudes_por_cliente&idCliente=${id_usuario}`)
-        .then(response => response.json())
-        .then(data => setSolicitudes(data))
-        .catch(error => console.error('Error al obtener solicitudes:', error));
+    if (messages.length > 0) {
+      localStorage.setItem('messages', JSON.stringify(messages));
     }
-  }, [id_usuario]);
+  }, [messages]);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: files ? files[0] : value,
-    }));
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    const newMessage = {
+      userId: 3,
+      username: 'Carlos Díaz',
+      message: message,
+      image: image,
+      timestamp: new Date().toLocaleTimeString(),
+      isConnected: true,
+    };
+
+    setMessages([...messages, newMessage]);
+    setMessage('');
+    setImage(null);
+    toast.success("Mensaje enviado");
   };
 
-
-  const [open, setOpen] = useState(false);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
-    window.location.href = DOMAIN_FRONT + 'plataforma';
+    setOpen(false);
   };
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('idCliente', id_usuario);
-    formDataToSend.append('idSolicitud', formData.solicitud);
-    formDataToSend.append('motivo', formData.motivo);
-    formDataToSend.append('descripcion', formData.descripcion);
-    formDataToSend.append('imagen', formData.imagen);
-
-
-    try {
-      const response = await fetch(`${DOMAIN_BACK}?controller=quejas&action=crear_queja`, {
-        method: 'POST',
-        body: formDataToSend,
-        headers: {
-          'Accept': 'application/json',
-        },
-        // body: JSON.stringify({
-        //   idCliente: id_usuario,
-        //   idSolicitud: formData.solicitud,
-        //   motivo: formData.motivo,
-        //   descripcion: formData.descripcion,
-        //   imagen: formData.imagen,
-        // })
-      });
-
-      const data = await response.json();
-
-      console.log(response);
-      console.log(data);
-      if (data.estado === 1) {
-        toast.success(data.mensaje);
-
-        handleClickOpen();
-        // setTimeout(() => {
-        //   window.location.href = DOMAIN_FRONT + 'plataforma';
-        // }, 2000);
-      } else {
-        toast.error(data.mensaje);
-      }
-    } catch (error) {
-      console.error('Error al registrar la queja:', error);
-      toast.error('Error al registrar la queja');
-    }
-  };
-
-
 
   return (
     <>
       <ToastContainer />
-       {especialista == '0' ? (
-         <Sidebar />
-       ) : (
-        <SidebarEpecialista/>
-      )}
+      <Sidebar /> {/* Sidebar de navegación */}
 
-      <section className="ftco-section" style={{ marginTop: '5rem' }}>
+      <section className="chat-section" style={{ marginTop: '5rem' }}>
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6 text-center mb-5">
-              <h2 className="heading-section">Registro de Quejas</h2>
+              <h2 className="heading-section">Chat de Grupo</h2>
             </div>
           </div>
           <div className="row justify-content-center">
-            <div className="col-md-7 col-lg-5">
+            <div className="col-md-8 col-lg-8">
               <div className="wrap">
-                <div className="login-wrap p-4 p-md-5">
-                  <div className="icon d-flex align-items-center justify-content-center">
-                    <span className="fa fa-user-o"></span>
+                <div className="chat-wrap p-4 p-md-5" style={{ width: '100%' }}>
+                  <div className="messages-container" style={{ height: '500px', overflowY: 'scroll', marginBottom: '20px' }}>
+                    {messages.map((msg, index) => (
+                      <div key={index} className={`message ${msg.isConnected ? 'connected' : 'disconnected'}`} style={{ marginBottom: '15px' }}>
+                        <div className="user-info" style={{ marginBottom: '5px' }}>
+                          <span className="username">{msg.username}</span>
+                          <span className="timestamp">{msg.timestamp}</span>
+                          <div className={`status ${msg.isConnected ? 'online' : 'offline'}`}></div>
+                        </div>
+                        <p>{msg.message}</p>
+                        {msg.image && (
+                          <div className="message-image" style={{ maxWidth: '100%', marginBottom: '10px' }}>
+                            <img src={msg.image} alt="Imagen adjunta" style={{ width: '100%', maxWidth: '400px', borderRadius: '8px' }} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    <div ref={messagesEndRef} />
                   </div>
-                  <h3 className="text-center mb-4">¡Bienvenido!</h3>
-                  <form onSubmit={handleSubmit} className="register-complaint-form">
-                    <div className="form-group">
-                      <label htmlFor="solicitud">Seleccione su solicitud:</label>
-                      <select
-                        name="solicitud"
-                        className="form-control"
-                        value={formData.solicitud}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Nombre de Solicitud</option>
-                        {solicitudes.map((solicitud) => (
-                          <option key={solicitud.idSolicitud} value={solicitud.idSolicitud}>
-                            {solicitud.descripcion}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="motivo">Motivo de queja:</label>
-                      <select
-                        name="motivo"
-                        className="form-control"
-                        value={formData.motivo}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Seleccione motivo</option>
-                        <option value="Aplicativo">Aplicativo</option>
-                        <option value="Especialista">Especialista</option>
-                        <option value="Servicio">Servicio</option>
-                        <option value="Otro">Otro</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="descripcion">Descripción de queja:</label>
-                      <textarea
-                        name="descripcion"
-                        className="form-control"
-                        rows="3"
-                        value={formData.descripcion}
-                        onChange={handleChange}
-                        required
-                      ></textarea>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="imagen">Cargar Imagen:</label>
-                      <input
-                        type="file"
-                        name="imagen"
-                        className="form-control-file"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <button type="submit" className="btn btn-primary form-control">Registrar Queja</button>
-                    </div>
-                  </form>
+
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Escribe un mensaje"
+                    style={{ width: '100%' }}
+                  />
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ width: '100%', marginBottom: '10px' }}
+                  />
+
+                  <div className="form-group">
+                    <button
+                      type="button"
+                      className="btn btn-primary form-control"
+                      onClick={handleSendMessage}
+                    >
+                      Enviar Mensaje
+                    </button>
+                  </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="col-md-3">
+              <div className="user-list">
+                <h3>Usuarios Conectados</h3>
+                <div className="user" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <div className="status online" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'green', marginRight: '10px' }}></div>
+                  <span>Juan Pérez</span>
+                </div>
+                <div className="user" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <div className="status offline" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'red', marginRight: '10px' }}></div>
+                  <span>María González</span>
+                </div>
+                <div className="user" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <div className="status online" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'green', marginRight: '10px' }}></div>
+                  <span>Carlos Díaz</span>
+                </div>
+                <div className="user" style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <div className="status offline" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'red', marginRight: '10px' }}></div>
+                  <span>Lucía Fernández</span>
+                </div>
+              </div>
+
+              <div className="social-buttons" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+                <a href="https://wa.me/" target="_blank" rel="noopener noreferrer">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style={{ width: '40px', height: '40px' }} />
+                </a>
+                <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" style={{ width: '40px', height: '40px' }} />
+                </a>
+                <a href="https://t.me/" target="_blank" rel="noopener noreferrer">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Telegram_2019_simple_logo.svg" alt="Telegram" style={{ width: '40px', height: '40px' }} />
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Su queja de registró corretamente , pronto le enviaremos la respuesta a su correo este sera en un plazo de 2-3 días hábiles"}
-        </DialogTitle>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Mensaje Enviado</DialogTitle>
         <DialogContent>
-          <center>  
-            <img src='/terminada.png' width='60%'></img>
+          <center>
+            <img src='/terminada.png' width='60%' alt="mensaje enviado" />
           </center>
         </DialogContent>
         <DialogActions>
-          <Button className='btn btn-primary' onClick={handleClose} autoFocus>
-            Cerrar
-          </Button>
+          <Button onClick={handleClose} autoFocus>Cerrar</Button>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export default RegisterComplaint;
+export default ChatApp;
