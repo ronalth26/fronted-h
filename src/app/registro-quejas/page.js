@@ -128,7 +128,8 @@ const ChatApp = () => {
                   <div className="form-group">
                     <button
                       type="button"
-                      className="btn btn-primary form-control"
+                      style={{color:" rgba(5,29,64,255)",backgroundColor:"rgba(252,192,68,255)"}}
+                      className="btn form-control"
                       onClick={handleSendMessage}
                     >
                       Enviar Mensaje
