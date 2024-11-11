@@ -9,7 +9,8 @@ import '../estilos/globales.css';
 import useToken from '../utils/auth';
 import { Nav, Tab, Row, Col, Modal, Button } from 'react-bootstrap';
 import { FaHome, FaUser, FaEnvelope } from 'react-icons/fa';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 export default function Inicio() {
   const [showChat, setShowChat] = useState(false);
@@ -269,11 +270,55 @@ export default function Inicio() {
                     </td>
 
                     {/* <!-- Columna de botón de localizar con ícono --> */}
+
                     <td>
-                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
+                      <button
+                        className="btn btn-outline-secondary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#mapsModal1"
+                        title="Localizar"
+                        style={{ width: '50px', height: '40px' }}
+                      >
+                        <img src="/icons/loc.png" width="20" alt="Localizar" />
                       </button>
                     </td>
+
+                    {/* Modal de Bootstrap */}
+                    <div
+                      className="modal fade"
+                      id="mapsModal1"
+                      tabIndex="-1"
+                      aria-labelledby="mapsModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title" id="mapsModalLabel">
+                              Ubicación de Bomberos en Arequipa, Perú
+                            </h5>
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div className="modal-body">
+                            <iframe
+                              src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA4Ek5gJPbNrIXnDOpEBKs6-HrmQ-fQTLg&center=-16.397122225147513,-71.53803574994112&zoom=19"
+
+                              width="100%"
+                              height="450"
+                              style={{ border: 0 }}
+                              allowFullScreen
+                              loading="lazy"
+                            ></iframe>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </tr>
 
                   <tr>
@@ -315,11 +360,55 @@ export default function Inicio() {
                     </td>
 
                     {/* <!-- Columna de botón de localizar con ícono --> */}
-                    <td>
-                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
-                      </button>
-                    </td>
+                     {/* <!-- Columna de botón de localizar con ícono --> */}
+                     <td>
+        <button
+          className="btn btn-outline-secondary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#mapsModal2"
+          title="Localizar"
+          style={{ width: '50px', height: '40px' }}
+        >
+          <img src="/icons/loc.png" width="20" alt="Localizar" />
+        </button>
+      </td>
+
+      {/* Modal de Bootstrap */}
+      <div
+        className="modal fade"
+        id="mapsModal2"
+        tabIndex="-1"
+        aria-labelledby="mapsModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="mapsModalLabel">
+                Ubicación de comisaria en Arequipa, Perú
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <iframe
+                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA4Ek5gJPbNrIXnDOpEBKs6-HrmQ-fQTLg&center=-16.401179623176528,-71.53591989553084&zoom=19"
+                
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
                   </tr>
                   <tr>
                     {/* <!-- Columna de servicio con ícono y nombre --> */}
@@ -361,10 +450,54 @@ export default function Inicio() {
 
                     {/* <!-- Columna de botón de localizar con ícono --> */}
                     <td>
-                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/loc.png" width="20" alt="Localizar"></img>
-                      </button>
-                    </td>
+        <button
+          className="btn btn-outline-secondary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#mapsModal3"
+          title="Localizar"
+          style={{ width: '50px', height: '40px' }}
+        >
+          <img src="/icons/loc.png" width="20" alt="Localizar" />
+        </button>
+      </td>
+
+      {/* Modal de Bootstrap */}
+      <div
+        className="modal fade"
+        id="mapsModal3"
+        tabIndex="-1"
+        aria-labelledby="mapsModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="mapsModalLabel">
+                Ubicación de ambulancia en Arequipa, Perú
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <iframe
+                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA4Ek5gJPbNrIXnDOpEBKs6-HrmQ-fQTLg&center=-16.393243221147564,-71.53047237791604&zoom=19"
+                
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
                   </tr>
                   <tr>
                     {/* <!-- Columna de servicio con ícono y nombre --> */}
@@ -406,10 +539,52 @@ export default function Inicio() {
 
                     {/* <!-- Columna de botón de localizar con ícono --> */}
                     <td>
-                      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Localizar" style={{ width: '50px', height: '40px' }}>
-                        <img src="/icons/loc.png" width="20" alt="Localizar" onClick={handleMaps}></img>
-                      </button>
-                    </td>
+        <button
+          className="btn btn-outline-secondary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#mapsModal4"
+          title="Localizar"
+          style={{ width: '50px', height: '40px' }}
+        >
+          <img src="/icons/loc.png" width="20" alt="Localizar" />
+        </button>
+      </td>
+
+      {/* Modal de Bootstrap */}
+      <div
+        className="modal fade"
+        id="mapsModal4"
+        tabIndex="-1"
+        aria-labelledby="mapsModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="mapsModalLabel">
+                Ubicación de de familiares en Arequipa, Perú
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <iframe
+                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA4Ek5gJPbNrIXnDOpEBKs6-HrmQ-fQTLg&center=-16.408968260986036,-71.54053285708898&zoom=19"
+                
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
                   </tr>
                 </tbody>
               </table>
@@ -504,7 +679,7 @@ export default function Inicio() {
                 Ofrecemos bomberos, policía, ambulancia, y más. ¿Te gustaría más información sobre algún servicio?
               </p>
             </div>
-            
+
           </div>
           {/* fin modal */}
 
@@ -686,7 +861,7 @@ export default function Inicio() {
             src="/publiciones/imagen1.png"
             style={{ width: '40px', height: '40px', marginRight: '10px' }}
           />
-          
+
           <Modal.Title style={{ paddingLeft: '190px' }}>
             Editar Contactos de Emergencia
           </Modal.Title>
