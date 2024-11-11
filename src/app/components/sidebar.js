@@ -279,7 +279,7 @@ const Sidebar = () => {
             <ListItemText primary="Activación de Alerta" />
           </ListItem>
         </Link>
-        <Link href="contacto">
+        <Link href="registro-de-solicitudes">
           <ListItem className="item-list">
             <ListItemIcon>
               <FaEnvelope />
