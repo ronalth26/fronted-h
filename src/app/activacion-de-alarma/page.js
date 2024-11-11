@@ -29,7 +29,7 @@ const ActivacionAlarma = () => {
         Yanahuara: [{ name: "Luis Arce" }, { name: "Sofia Castillo" }],
         Miraflores: [{ name: "Carlos Pérez" }, { name: "Maria Garcia" }],
         Paucarpata: [{ name: "Elena Fernandez" }, { name: "Jose Huamani" }],
-        "Mariano Melgar": [{ name: "Luis Lopez" }, { name: "Rosa Alvarez" }],
+        Socabaya: [{ name: "Luis Lopez" }, { name: "Rosa Alvarez" }],
       };
       setUsers(mockUsers[selectedDistrict] || []);
     }
@@ -128,9 +128,9 @@ const ActivacionAlarma = () => {
           <option value="">Distrito</option>
           <option value="Cercado">Cercado</option>
           <option value="Yanahuara">Yanahuara</option>
-          <option value="Cayma">Cayma</option>
-          <option value="Sachaca">Sachaca</option>
+          <option value="Miraflores">Miraflores</option>
           <option value="Paucarpata">Paucarpata</option>
+          <option value="Socabaya">Socabaya</option>
         </select>
         <Button
           onClick={() => handleAddUser(users[0])}
