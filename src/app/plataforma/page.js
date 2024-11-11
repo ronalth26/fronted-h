@@ -23,6 +23,7 @@ export default function Inicio() {
   const { Token } = useToken();
   const { decodedToken, isExpired } = useJwt(Token);
 
+  
   // Datos publicación
   async function obtenerPublicaciones() {
     try {
@@ -504,7 +505,7 @@ export default function Inicio() {
                 Ofrecemos bomberos, policía, ambulancia, y más. ¿Te gustaría más información sobre algún servicio?
               </p>
             </div>
-            
+
           </div>
           {/* fin modal */}
 
@@ -686,7 +687,7 @@ export default function Inicio() {
             src="/publiciones/imagen1.png"
             style={{ width: '40px', height: '40px', marginRight: '10px' }}
           />
-          
+
           <Modal.Title style={{ paddingLeft: '190px' }}>
             Editar Contactos de Emergencia
           </Modal.Title>
@@ -814,47 +815,63 @@ export default function Inicio() {
         {/* Top Navigation */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div className="d-flex align-items-center">
-            <label className="me-2">Distrito:</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Selecciona distrito"
-              style={{
-                maxWidth: "200px",
-                backgroundColor: "#f8f9fa", // Light gray background for the input
-                borderColor: "#ced4da" // Light border color for contrast
-              }}
-              list="distritos" // Links input to the datalist below
-            />
-            <datalist id="distritos">
-              <option value="Arequipa" />
-              <option value="Cayma" />
-              <option value="Cerro Colorado" />
-              <option value="Mariano Melgar" />
-              <option value="Miraflores" />
-              <option value="Paucarpata" />
-              <option value="Sachaca" />
-              <option value="Socabaya" />
-              <option value="Yanahuara" />
-              {/* Add more districts as needed */}
-            </datalist>
+            <label htmlFor="distrito" className="me-2">Distrito:</label>
+
+            <div style={{ position: "relative", maxWidth: "200px" }}>
+              <select
+                id="distrito"
+                className="form-control"
+                style={{
+                  width: "100%",
+                  appearance: "none",       // Quita el estilo nativo
+                  WebkitAppearance: "none",  // Compatibilidad en Safari
+                  MozAppearance: "none",     // Compatibilidad en Firefox
+                  backgroundColor: "#f8f9fa",
+                  borderColor: "#ced4da",
+                  paddingRight: "30px"      // Espacio para la flecha
+                }}
+                defaultValue=""
+              >
+                <option value="" disabled>Selecciona distrito</option>
+                <option value="Arequipa">Arequipa</option>
+                <option value="Cayma">Cayma</option>
+                <option value="Cerro Colorado">Cerro Colorado</option>
+                <option value="Mariano Melgar">Mariano Melgar</option>
+                <option value="Miraflores">Miraflores</option>
+                <option value="Paucarpata">Paucarpata</option>
+                <option value="Sachaca">Sachaca</option>
+                <option value="Socabaya">Socabaya</option>
+                <option value="Yanahuara">Yanahuara</option>
+                {/* Agrega más distritos según sea necesario */}
+              </select>
+
+              {/* Flecha personalizada */}
+              <span style={{
+                position: "absolute",
+                top: "50%",
+                right: "10px",
+                transform: "translateY(-50%)",
+                pointerEvents: "none",
+                fontSize: "12px",
+                color: "#6c757d"
+              }}>▼</span>
+            </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+
+          <div className="d-flex align-items-center">
             {/* Botón Nueva Publicación */}
             <button className="btn btn-primary me-3" onClick={handleChatOpen_NewPost}>
               <i className="fas fa-plus"></i> Nueva Publicación
             </button>
-            {/* Botón para cargar publicaciones */}
-            <button className="btn btn-primary me-3" onClick={obtenerPublicaciones}>
-              <i className="fas fa-plus"></i> Cargar Publicación
-            </button>
 
             {/* Botón Mis Publicaciones */}
             <button className="btn btn-outline-primary">
-              <i className="fas fa-plus"></i> Mis publicaciones
+              <i className="fas fa-book"></i> Mis publicaciones
             </button>
           </div>
         </div>
+
+
 
         {/* Navigation Tabs */}
         <div className="container mt-5">
@@ -869,12 +886,12 @@ export default function Inicio() {
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="afiches" className="btn-custom">
+                    <Nav.Link eventKey="afiches" className="btn-custom" onClick={obtenerPublicaciones}>
                       <i className="fas fa-image"></i> Afiches
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="consejo" className="btn-custom">
+                    <Nav.Link eventKey="consejo" className="btn-custom" onClick={obtenerPublicaciones}>
                       <i className="fas fa-lightbulb"></i> Consejos
                     </Nav.Link>
                   </Nav.Item>
@@ -908,10 +925,10 @@ export default function Inicio() {
                             <div className="d-flex flex-column align-items-center">
                               {/* Imagen dinámica */}
                               <img
-                                src={publicacion.imagenUrl}
+                                src={publicacion.imagen}
                                 alt={`Imagen de ${publicacion.titulo}`}
                                 className="img-thumbnail mb-3"
-                                style={{ maxWidth: "150px" }}
+                                style={{ maxWidth: "500px" }}
                               />
 
                               <div className="d-flex align-items-center">
@@ -961,10 +978,10 @@ export default function Inicio() {
                             <div className="d-flex flex-column align-items-center">
                               {/* Imagen dinámica */}
                               <img
-                                src={afiche.imagenUrl}
+                                src={afiche.imagen}
                                 alt={`Imagen de ${afiche.titulo}`}
                                 className="img-thumbnail mb-3"
-                                style={{ maxWidth: "150px" }}
+                                style={{ maxWidth: "500px" }}
                               />
 
                               <div className="d-flex align-items-center">
@@ -1014,10 +1031,10 @@ export default function Inicio() {
                             <div className="d-flex flex-column align-items-center">
                               {/* Imagen dinámica */}
                               <img
-                                src={consejo.imagenUrl}
+                                src={consejo.imagen}
                                 alt={`Imagen de ${consejo.titulo}`}
                                 className="img-thumbnail mb-3"
-                                style={{ maxWidth: "150px" }}
+                                style={{ maxWidth: "500px" }}
                               />
 
                               <div className="d-flex align-items-center">
